@@ -1,0 +1,27 @@
+---
+Name: linkconfig
+---
+SilverStripe\ORM\FieldType\DBString:
+  extensions:
+    - gorriecoe\Link\Extensions\DBStringLink
+---
+Only:
+  moduleexists: 'silverstripe/cms'
+---
+gorriecoe\Link\Models\Link:
+  extensions:
+    - gorriecoe\Link\Extensions\LinkSiteTree
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - gorriecoe\Link\Extensions\SiteTreeLink
+---
+Only:
+  moduleexists: silverstripe/graphql
+---
+SilverStripe\GraphQL\Controller:
+  schema:
+    types:
+      link: gorriecoe\Link\GraphQL\LinkTypeCreator
+    queries:
+      link: gorriecoe\Link\GraphQL\LinkQueryCreator
+      links: gorriecoe\Link\GraphQL\LinksQueryCreator

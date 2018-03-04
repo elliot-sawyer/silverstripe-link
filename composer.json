@@ -1,0 +1,25 @@
+{
+  "name": "gorriecoe/silverstripe-link",
+  "description": "",
+  "type": "silverstripe-vendormodule",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Gorrie Coe",
+      "email": "gorriecoe@gmail.com"
+    }
+  ],
+  "keywords": [
+    "silverstripe",
+    "cms",
+    "link"
+  ],
+  "homepage": "http://github.com/gorriecoe/silverstripe-link",
+  "require": {
+    "silverstripe/framework": "^4",
+    "unclecheese/display-logic": "^2"
+  },
+  "extra": {
+    "installer-name": "link"
+  }
+}
