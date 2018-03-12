@@ -109,3 +109,30 @@ gorriecoe\Link\Models\Link:
     - gorriecoe\Link\Extensions\AutomaticMarkupID
     - gorriecoe\Link\Extensions\DefineableMarkupID
 ```
+
+### String template manipulation
+Link has a few methods to help manipulate DBString's.
+
+##### PhoneFriendly
+Converts a string to a phone number e.g 0800PIZZAHUT becomes 080074992488
+
+PHP
+```php
+$this->obj('Phone')->PhoneFriendly()
+```
+Template
+```
+{$Phone.PhoneFriendly}
+```
+
+##### LinkFriendly or URLFriendly
+Converts a DBString to a url safe string.  This can be useful for anchors.
+
+PHP
+```php
+$this->obj('Title')->LinkFriendly()
+```
+Template
+```
+{$Title.LinkFriendly}
+```
