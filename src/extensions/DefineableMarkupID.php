@@ -34,9 +34,9 @@ class DefineableMarkupID extends DataExtension
             'Root.Main',
             TextField::create(
                 'IDCustomValue',
-                'ID'
+                _t(__CLASS__ . '.ID', 'ID')
             )
-            ->setDescription(_t('link.IDCUSTOMVALUE', 'Define a ID for the link.  This is particularly useful for google tracking.'))
+            ->setDescription(_t(__CLASS__ . '.IDCUSTOMVALUE', 'Define an ID for the link.  This is particularly useful for google tracking.'))
         );
         return $fields;
     }

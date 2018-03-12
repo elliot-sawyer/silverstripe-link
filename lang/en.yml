@@ -1,22 +1,24 @@
 en:
+  gorriecoe\Link\Extensions\DefineableMarkupID:
+    ID: ID
+    IDCUSTOMVALUE: 'Define an ID for the link.  This is particularly useful for google tracking.'
+  gorriecoe\Link\Extensions\LinkSiteTree:
+    ANCHOR: Anchor/Querystring
+    ANCHORINFO: 'Include # at the start of your anchor name or, ? at the start of your querystring'
+    DELETEDWARNING: 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'
+    PAGE: Page
   gorriecoe\Link\Models\Link:
+    EMAILADDRESS: 'Email Address'
+    FILE: File
+    LINKTYPE: Type
+    OPENINNEWWINDOW: 'Open link in a new window'
+    OPTIONALTITLE: 'Optional. Will be auto-generated from link if left blank.'
+    PHONENUMBER: 'Phone Number'
     PLURALNAME: Links
     PLURALS:
       one: 'A Link'
       other: '{count} Links'
     SINGULARNAME: Link
-  link:
-    ANCHOR: Anchor/Querystring
-    ANCHORINFO: 'Include # at the start of your anchor name or, ? at the start of your querystring'
-    DELETEDWARNING: 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'
-    EMAILADDRESS: 'Email Address'
-    FILE: File
-    IDCUSTOMVALUE: 'Define a ID for the link.  This is particularly useful for google tracking.'
-    LINKTYPE: Type
-    OPENINNEWWINDOW: 'Open link in a new window'
-    OPTIONALTITLE: 'Optional. Will be auto-generated from link if left blank.'
-    PAGE: Page
-    PHONENUMBER: 'Phone Number'
     STYLE: Style
     TITLE: Title
     URL: URL

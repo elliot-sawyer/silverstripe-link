@@ -57,14 +57,14 @@ class LinkSiteTree extends DataExtension
             Wrapper::create(
                 TreeDropdownField::create(
                     'SiteTreeID',
-                    _t('link.PAGE', 'Page'),
+                    _t(__CLASS__ . '.PAGE', 'Page'),
                     SiteTree::class
                 ),
                 TextField::create(
                     'Anchor',
-                    _t('link.ANCHOR', 'Anchor/Querystring')
+                    _t(__CLASS__ . '.ANCHOR', 'Anchor/Querystring')
                 )
-                ->setDescription(_t('link.ANCHORINFO', 'Include # at the start of your anchor name or, ? at the start of your querystring'))
+                ->setDescription(_t(__CLASS__ . '.ANCHORINFO', 'Include # at the start of your anchor name or, ? at the start of your querystring'))
             )
             ->displayIf('Type')->isEqualTo('SiteTree')->end()
         );
@@ -73,7 +73,7 @@ class LinkSiteTree extends DataExtension
         if ($owner->SiteTreeID && !$owner->SiteTree()->isPublished()) {
             $fields
                 ->dataFieldByName('SiteTreeID')
-                ->setDescription(_t('link.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
+                ->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
         }
     }
 }

@@ -131,7 +131,7 @@ class Link extends DataObject
                 'Root.Main',
                 DropdownField::create(
                     'Style',
-                    _t('link.STYLE', 'Style'),
+                    _t(__CLASS__ . '.STYLE', 'Style'),
                     $styles
                 )
                 ->setEmptyString('Default')
@@ -143,19 +143,19 @@ class Link extends DataObject
             [
                 TextField::create(
                     'Title',
-                    _t('link.TITLE', 'Title')
+                    _t(__CLASS__ . '.TITLE', 'Title')
                 )
-                ->setDescription(_t('link.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
+                ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
                 OptionsetField::create(
                     'Type',
-                    _t('link.LINKTYPE', 'Type'),
+                    _t(__CLASS__ . '.LINKTYPE', 'Type'),
                     $this->i18nTypes
                 )
                 ->setValue('URL'),
                 Wrapper::create(
                     TreeDropdownField::create(
                         'FileID',
-                        _t('link.FILE', 'File'),
+                        _t(__CLASS__ . '.FILE', 'File'),
                         File::class,
                         'ID',
                         'Title'
@@ -165,27 +165,27 @@ class Link extends DataObject
                 Wrapper::create(
                     TextField::create(
                         'URL',
-                        _t('link.URL', 'URL')
+                        _t(__CLASS__ . '.URL', 'URL')
                     )
                 )
                 ->displayIf("Type")->isEqualTo('URL')->end(),
                 Wrapper::create(
                     TextField::create(
                         'Email',
-                        _t('link.EMAILADDRESS', 'Email Address')
+                        _t(__CLASS__ . '.EMAILADDRESS', 'Email Address')
                     )
                 )
                 ->displayIf("Type")->isEqualTo('Email')->end(),
                 Wrapper::create(
                     TextField::create(
                         'Phone',
-                        _t('link.PHONENUMBER', 'Phone Number')
+                        _t(__CLASS__ . '.PHONENUMBER', 'Phone Number')
                     )
                 )
                 ->displayIf("Type")->isEqualTo('Phone')->end(),
                 CheckboxField::create(
                     'OpenInNewWindow',
-                    _t('link.OPENINNEWWINDOW','Open link in a new window')
+                    _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
                 )
                 ->displayIf('Type')->isEqualTo("URL")
                 ->orIf()->isEqualTo('File')
@@ -302,7 +302,7 @@ class Link extends DataObject
         $i18nTypes = [];
         // Get translatable labels
         foreach ($this->Types as $key => $label) {
-            $i18nTypes[$key] = _t('link.TYPE'.strtoupper($key), $label);
+            $i18nTypes[$key] = _t(__CLASS__ . '.TYPE'.strtoupper($key), $label);
         }
         $this->extend('updatei18nTypes', $i18nTypes);
         return $i18nTypes;
@@ -327,7 +327,7 @@ class Link extends DataObject
     {
         $i18nStyles = [];
         foreach ($this->styles as $key => $label) {
-            $i18nStyles[$key] = _t('link.STYLE'.strtoupper($key), $label);
+            $i18nStyles[$key] = _t(__CLASS__ . '.STYLE'.strtoupper($key), $label);
         }
         $this->extend('updatei18nStyles', $i18nStyles);
         return $i18nStyles;
@@ -363,7 +363,7 @@ class Link extends DataObject
                     if ($component->hasMethod('Link')) {
                         $LinkURL = $component->Link() . $this->Anchor;
                     } else {
-                        $LinkURL = "Please implement a Link() method on your dataobject \"$type\"";
+                        $LinkURL = _t(__CLASS__ . '.LINKMETHODMISSING', "Please implement a Link() method on your dataobject \"$type\"");
                     }
                 }
                 break;
@@ -447,7 +447,7 @@ class Link extends DataObject
     public function getLinkType()
     {
         $types = $this->config()->get('types');
-        return isset($types[$this->Type]) ? _t('link.TYPE'.strtoupper($this->Type), $types[$this->Type]) : null;
+        return isset($types[$this->Type]) ? _t(__CLASS__ . '.TYPE'.strtoupper($this->Type), $types[$this->Type]) : null;
     }
 
     /**
@@ -532,7 +532,7 @@ class Link extends DataObject
                 if ($this->{$type} == '') {
                     $valid = false;
                     $message = _t(
-                        'link.VALIDATIONERROR_EMPTY'.strtoupper($type),
+                        __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
                         'You must enter a {LinkType}',
                         [
                             'LinkType' => $this->LinkType
@@ -545,7 +545,7 @@ class Link extends DataObject
                 if ($type && empty($this->{$type.'ID'})) {
                     $valid = false;
                     $message = _t(
-                        'link.VALIDATIONERROR_OBJECT',
+                        __CLASS__ . '.VALIDATIONERROR_OBJECT',
                         'Please select a {LinkType}',
                         [
                             'LinkType' => $this->LinkType
@@ -562,7 +562,7 @@ class Link extends DataObject
                     if (!in_array(substr($this->URL, 0, 1), $allowedFirst) && !filter_var($this->URL, FILTER_VALIDATE_URL)) {
                         $valid = false;
                         $message = _t(
-                            'link.VALIDATIONERROR_VALIDURL',
+                            __CLASS__ . '.VALIDATIONERROR_VALIDURL',
                             'Please enter a valid URL.  Be sure to include http:// for an external URL. or begin your internal url/anchor with a "/" character'
                         );
                     }
@@ -571,7 +571,7 @@ class Link extends DataObject
                     if (!filter_var($this->Email, FILTER_VALIDATE_EMAIL)) {
                         $valid = false;
                         $message = _t(
-                            'link.VALIDATIONERROR_VALIDEMAIL',
+                            __CLASS__ . '.VALIDATIONERROR_VALIDEMAIL',
                             'Please enter a valid Email address'
                         );
                     }
@@ -580,7 +580,7 @@ class Link extends DataObject
                     if (!preg_match("/^\+?[0-9a-zA-Z\-\s]*[\,\#]?[0-9\-\s]*$/", $this->Phone)) {
                         $valid = false;
                         $message = _t(
-                            'link.VALIDATIONERROR_VALIDPHONE',
+                            __CLASS__ . '.VALIDATIONERROR_VALIDPHONE',
                             'Please enter a valid Phone number'
                         );
                     }
