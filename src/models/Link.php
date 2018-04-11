@@ -37,10 +37,10 @@ class Link extends DataObject
      */
     private static $db = [
         'Title' => 'Varchar(255)',
-        'Type' => 'Varchar',
+        'Type' => 'Varchar(50)',
         'URL' => 'Varchar(255)',
         'Email' => 'Varchar(255)',
-        'Phone' => 'Varchar(255)',
+        'Phone' => 'Varchar(30)',
         'OpenInNewWindow' => 'Boolean',
         'Template' => 'Varchar(255)'
     ];
@@ -50,7 +50,7 @@ class Link extends DataObject
      * @var array
      */
     private static $has_one = [
-        'File' => File::class,
+        'File' => File::class
     ];
 
     /**
@@ -60,7 +60,7 @@ class Link extends DataObject
      */
     private static $summary_fields = [
         'Title' => 'Title',
-        'LinkType' => 'Type',
+        'TypeLabel' => 'Type',
         'LinkURL' => 'Link'
     ];
 
@@ -120,10 +120,10 @@ class Link extends DataObject
     {
         $fields = FieldList::create(
             TabSet::create(
-                "Root",
-                Tab::create("Main")
+                'Root',
+                Tab::create('Main')
             )
-            ->setTitle(_t('SiteTree.TABMAIN', "Main"))
+            ->setTitle(_t('SiteTree.TABMAIN', 'Main'))
         );
 
         if ($styles = $this->i18nStyles) {
@@ -161,33 +161,33 @@ class Link extends DataObject
                         'Title'
                     )
                 )
-                ->displayIf("Type")->isEqualTo('File')->end(),
+                ->displayIf('Type')->isEqualTo('File')->end(),
                 Wrapper::create(
                     TextField::create(
                         'URL',
                         _t(__CLASS__ . '.URL', 'URL')
                     )
                 )
-                ->displayIf("Type")->isEqualTo('URL')->end(),
+                ->displayIf('Type')->isEqualTo('URL')->end(),
                 Wrapper::create(
                     TextField::create(
                         'Email',
                         _t(__CLASS__ . '.EMAILADDRESS', 'Email Address')
                     )
                 )
-                ->displayIf("Type")->isEqualTo('Email')->end(),
+                ->displayIf('Type')->isEqualTo('Email')->end(),
                 Wrapper::create(
                     TextField::create(
                         'Phone',
                         _t(__CLASS__ . '.PHONENUMBER', 'Phone Number')
                     )
                 )
-                ->displayIf("Type")->isEqualTo('Phone')->end(),
+                ->displayIf('Type')->isEqualTo('Phone')->end(),
                 CheckboxField::create(
                     'OpenInNewWindow',
                     _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
                 )
-                ->displayIf('Type')->isEqualTo("URL")
+                ->displayIf('Type')->isEqualTo('URL')
                 ->orIf()->isEqualTo('File')
                 ->orIf()->isEqualTo('SiteTree')->end()
             ]
@@ -444,10 +444,10 @@ class Link extends DataObject
      * Returns the description label of this links type
      * @return string
      */
-    public function getLinkType()
+    public function getTypeLabel()
     {
         $types = $this->config()->get('types');
-        return isset($types[$this->Type]) ? _t(__CLASS__ . '.TYPE'.strtoupper($this->Type), $types[$this->Type]) : null;
+        return isset($types[$this->Type]) ? _t(__CLASS__ . '.TYPE' . strtoupper($this->Type), $types[$this->Type]) : null;
     }
 
     /**
@@ -533,9 +533,9 @@ class Link extends DataObject
                     $valid = false;
                     $message = _t(
                         __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
-                        'You must enter a {LinkType}',
+                        'You must enter a {TypeLabel}',
                         [
-                            'LinkType' => $this->LinkType
+                            'TypeLabel' => $this->TypeLabel
                         ]
                     );
                 }
@@ -546,9 +546,9 @@ class Link extends DataObject
                     $valid = false;
                     $message = _t(
                         __CLASS__ . '.VALIDATIONERROR_OBJECT',
-                        'Please select a {LinkType}',
+                        'Please select a {TypeLabel}',
                         [
-                            'LinkType' => $this->LinkType
+                            'TypeLabel' => $this->TypeLabel
                         ]
                     );
                 }

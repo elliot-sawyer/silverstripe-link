@@ -12,6 +12,10 @@ composer require gorriecoe/silverstripe-link
 - silverstripe/framework ^4.0
 - unclecheese/display-logic ^2.0
 
+## Suggestion
+
+- [silverstripe/silverstripe-linkfield](https://github.com/gorriecoe/silverstripe-linkfield)
+
 ## Maintainers
 
 - [Gorrie Coe](https://github.com/gorriecoe)
@@ -74,7 +78,7 @@ gorriecoe\Link\Models\Link:
 
 ### Limit allowed Link types
 
-Globally limit link types.  To limit types define them in your site config.yml file as below.
+To limit types define them in your site config.yml file as below.
 
 ```yaml
 gorriecoe\Link\Models\Link:
@@ -94,7 +98,7 @@ gorriecoe\Link\Models\Link:
     - gorriecoe\Link\Extensions\AutomaticMarkupID
 ```
 
-To apply automatic id's add the following to your config
+To apply input defineable id's add the following to your config
 ```yaml
 gorriecoe\Link\Models\Link:
   extensions:

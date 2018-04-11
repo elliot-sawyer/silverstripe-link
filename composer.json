@@ -1,6 +1,6 @@
 {
   "name": "gorriecoe/silverstripe-link",
-  "description": "",
+  "description": "Adds a Link Object that can be link to a URL, Email, Phone number, an internal Page or File.",
   "type": "silverstripe-vendormodule",
   "license": "BSD-3-Clause",
   "authors": [
@@ -11,7 +11,6 @@
   ],
   "keywords": [
     "silverstripe",
-    "cms",
     "link"
   ],
   "homepage": "http://github.com/gorriecoe/silverstripe-link",

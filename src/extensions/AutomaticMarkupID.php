@@ -8,8 +8,7 @@ use SilverStripe\ORM\DataExtension;
 /**
  * Add sitetree type to link field
  *
- * @package silverstripe
- * @subpackage silverstripe-link
+ * @package silverstripe-link
  */
 class AutomaticMarkupID extends DataExtension
 {

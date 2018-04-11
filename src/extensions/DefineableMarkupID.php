@@ -10,8 +10,7 @@ use SilverStripe\Core\Convert;
 /**
  * Add sitetree type to link field
  *
- * @package silverstripe
- * @subpackage silverstripe-link
+ * @package silverstripe-link
  */
 class DefineableMarkupID extends DataExtension
 {

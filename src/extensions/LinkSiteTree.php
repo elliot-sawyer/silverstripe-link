@@ -12,8 +12,7 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
 /**
  * Add sitetree type to link field
  *
- * @package silverstripe
- * @subpackage silverstripe-link
+ * @package silverstripe-link
  */
 class LinkSiteTree extends DataExtension
 {

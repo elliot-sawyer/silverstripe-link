@@ -11,8 +11,7 @@ use gorriecoe\Link\Models\Link;
 /**
  * LinkQueryCreator
  *
- * @package silverstripe
- * @subpackage silverstripe-menu
+ * @package silverstripe-link
  */
 class LinkQueryCreator extends QueryCreator implements OperationResolver
 {

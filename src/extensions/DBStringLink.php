@@ -8,8 +8,7 @@ use SilverStripe\ORM\DataExtension;
 /**
  * Adds methods to DBString to help manipulate the output suitable for links
  *
- * @package silverstripe
- * @subpackage silverstripe-link
+ * @package silverstripe-link
  */
 class DBStringLink extends DataExtension
 {

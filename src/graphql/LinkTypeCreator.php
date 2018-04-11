@@ -9,8 +9,7 @@ use SilverStripe\GraphQL\Pagination\Connection;
 /**
  * LinkTypeCreator
  *
- * @package silverstripe
- * @subpackage silverstripe-menu
+ * @package silverstripe-link
  */
 class LinkTypeCreator extends TypeCreator
 {
