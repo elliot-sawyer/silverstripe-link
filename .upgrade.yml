@@ -1,0 +1,10 @@
+mappings:
+  AutomaticMarkupID: gorriecoe\Link\Extensions\AutomaticMarkupID
+  SiteTreeLink: gorriecoe\Link\Extensions\SiteTreeLink
+  DefineableMarkupID: gorriecoe\Link\Extensions\DefineableMarkupID
+  LinkSiteTree: gorriecoe\Link\Extensions\LinkSiteTree
+  DBStringLink: gorriecoe\Link\Extensions\DBStringLink
+  LinkQueryCreator: gorriecoe\Link\GraphQL\LinkQueryCreator
+  LinkTypeCreator: gorriecoe\Link\GraphQL\LinkTypeCreator
+  LinksQueryCreator: gorriecoe\Link\GraphQL\LinksQueryCreator
+  Link: gorriecoe\Link\Models\Link
