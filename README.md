@@ -66,22 +66,22 @@ Custom template
 ```
 
 ### Template variables
-#### LinkURL
+#### $LinkURL
 Returns the URL of the link.
-#### TargetAttr
+#### $TargetAttr
 Returns the html target attribute. `target='_blank'` or `null`
-#### Target
+#### $Target
 Returns the html target attribute value. `_blank` or `null`
-#### IDAttr
+#### $IDAttr
 Returns the html id attribute. `id='my-custom-id'` or `null`
-#### IDValue
+#### $IDValue
 Returns the html id value.
 
 Refer to [Add html id attribute](https://github.com/gorriecoe/silverstripe-link#add-html-id-attribute) for more information
 
-#### ClassAttr
+#### $ClassAttr
 Returns the html class attribute. `class='my-custom-id'` or `null`
-#### Class
+#### $Class
 Returns the html class value.
 
 Refer to [CMS Selectable Style](https://github.com/gorriecoe/silverstripe-link#cms-selectable-style) for more information
