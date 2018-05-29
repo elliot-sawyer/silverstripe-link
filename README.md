@@ -65,6 +65,31 @@ Custom template
 <% end_loop %>
 ```
 
+### Template variables
+#### LinkURL
+Returns the URL of the link.
+#### TargetAttr
+Returns the html target attribute. `target='_blank'` or `null`
+#### Target
+Returns the html target attribute value. `_blank` or `null`
+#### IDAttr
+Returns the html id attribute. `id='my-custom-id'` or `null`
+#### IDValue
+Returns the html id value.
+
+Refer to [Add html id attribute](https://github.com/gorriecoe/silverstripe-link#add-html-id-attribute) for more information
+
+#### ClassAttr
+Returns the html class attribute. `class='my-custom-id'` or `null`
+#### Class
+Returns the html class value.
+
+Refer to [CMS Selectable Style](https://github.com/gorriecoe/silverstripe-link#cms-selectable-style) for more information
+
+#### Linking Modes
+Linking mode variables are also available any sitetree link.
+Refer to [Linking Modes](https://docs.silverstripe.org/en/4/developer_guides/templates/common_variables/#linking-modes) for more information
+
 ### CMS Selectable Style
 
 You can offer CMS users the ability to select from a list of styles, allowing them to choose how their Link should be rendered. To enable this feature, register them in your site config.yml file as below.
