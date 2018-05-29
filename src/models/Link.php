@@ -15,6 +15,7 @@ use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Core\Convert;
+use SilverStripe\Control\Director;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**
@@ -198,6 +199,89 @@ class Link extends DataObject
         return $fields;
     }
 
+    /**
+     * Validate
+     * @return ValidationResult
+     */
+    public function validate()
+    {
+        $valid = true;
+        $message = null;
+        $type = $this->Type;
+
+        // Check if empty strings
+        switch ($type) {
+            case 'URL':
+            case 'Email':
+            case 'Phone':
+                if ($this->{$type} == '') {
+                    $valid = false;
+                    $message = _t(
+                        __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
+                        'You must enter a {TypeLabel}',
+                        [
+                            'TypeLabel' => $this->TypeLabel
+                        ]
+                    );
+                }
+                break;
+            case 'File':
+            case 'SiteTree':
+                if ($type && empty($this->{$type.'ID'})) {
+                    $valid = false;
+                    $message = _t(
+                        __CLASS__ . '.VALIDATIONERROR_OBJECT',
+                        'Please select a {TypeLabel}',
+                        [
+                            'TypeLabel' => $this->TypeLabel
+                        ]
+                    );
+                }
+                break;
+        }
+        // if its already failed don't bother checking the rest
+        if ($valid) {
+            switch ($type) {
+                case 'URL':
+                    $allowedFirst = ['#', '/'];
+                    if (!in_array(substr($this->URL, 0, 1), $allowedFirst) && !filter_var($this->URL, FILTER_VALIDATE_URL)) {
+                        $valid = false;
+                        $message = _t(
+                            __CLASS__ . '.VALIDATIONERROR_VALIDURL',
+                            'Please enter a valid URL.  Be sure to include http:// for an external URL. or begin your internal url/anchor with a "/" character'
+                        );
+                    }
+                    break;
+                case 'Email':
+                    if (!filter_var($this->Email, FILTER_VALIDATE_EMAIL)) {
+                        $valid = false;
+                        $message = _t(
+                            __CLASS__ . '.VALIDATIONERROR_VALIDEMAIL',
+                            'Please enter a valid Email address'
+                        );
+                    }
+                    break;
+                case 'Phone':
+                    if (!preg_match("/^\+?[0-9a-zA-Z\-\s]*[\,\#]?[0-9\-\s]*$/", $this->Phone)) {
+                        $valid = false;
+                        $message = _t(
+                            __CLASS__ . '.VALIDATIONERROR_VALIDPHONE',
+                            'Please enter a valid Phone number'
+                        );
+                    }
+                    break;
+            }
+        }
+
+        $result = ValidationResult::create();
+        if (!$valid) {
+            $result->addError($message);
+        }
+
+        $this->extend('updateValidate', $result);
+
+        return $result;
+    }
 
     /**
      * If the title is empty, set it to getLinkURL()
@@ -441,6 +525,99 @@ class Link extends DataObject
     }
 
     /**
+     * Returns the current page scope
+     * @return Controller
+     */
+    public function getCurrentPage()
+    {
+        $currentPage = Director::get_current_page();
+        if ($currentPage instanceof ContentController) {
+            $currentPage = $currentPage->data();
+        }
+        return $currentPage;
+    }
+
+    /**
+     * Returns true if this is the currently active page being used to handle this request.
+     *
+     * @return bool
+     */
+    public function isCurrent()
+    {
+        $isCurrent = false;
+        $this->extend('UpdateIsCurrent', $isCurrent);
+        return $isCurrent;
+    }
+
+    /**
+     * Check if this page is in the currently active section (e.g. it is either current or one of its children is
+     * currently being viewed).
+     *
+     * @return bool
+     */
+    public function isSection()
+    {
+        $isSection = false;
+        $this->extend('UpdateIsSection', $isSection);
+        return $isSection;
+    }
+
+    /**
+     * Check if the parent of this page has been removed (or made otherwise unavailable), and is still referenced by
+     * this child. Any such orphaned page may still require access via the CMS, but should not be shown as accessible
+     * to external users.
+     *
+     * @return bool
+     */
+    public function isOrphaned()
+    {
+        $isOrphaned = false;
+        $this->extend('UpdateIsOrphaned', $isOrphaned);
+        return $isOrphaned;
+    }
+
+    /**
+     * Return "link" or "current" depending on if this is the {@link Link::isCurrent()} current page.
+     *
+     * @return string
+     */
+    public function LinkOrCurrent()
+    {
+        $isCurrent = null;
+        $this->extend('UpdateLinkOrCurrent', $isCurrent);
+        return $isCurrent ? 'current' : 'link';
+    }
+
+    /**
+     * Return "link" or "section" depending on if this is the {@link Link::isSection()} current section.
+     *
+     * @return string
+     */
+    public function LinkOrSection()
+    {
+        $isSection = null;
+        $this->extend('UpdateLinkOrSection', $isSection);
+        return $isSection ? 'section' : 'link';
+    }
+
+    /**
+     * Return "link", "current" or "section" depending on if this page is the current page, or not on the current page
+     * but in the current section.
+     *
+     * @return string
+     */
+    public function LinkingMode()
+    {
+        if ($this->isCurrent()) {
+            return 'current';
+        } elseif ($this->isSection()) {
+            return 'section';
+        } else {
+            return 'link';
+        }
+    }
+
+    /**
      * Returns the description label of this links type
      * @return string
      */
@@ -448,6 +625,17 @@ class Link extends DataObject
     {
         $types = $this->config()->get('types');
         return isset($types[$this->Type]) ? _t(__CLASS__ . '.TYPE' . strtoupper($this->Type), $types[$this->Type]) : null;
+    }
+
+    /**
+     * Returns the base class without namespacing
+     * @param  string $class
+     * @return string
+     */
+    public function baseClassName($class)
+    {
+        $class = explode('\\', $class);
+        return array_pop($class);
     }
 
     /**
@@ -501,100 +689,5 @@ class Link extends DataObject
             }
             $ClassName = $next;
         }
-    }
-
-    /**
-     * Returns the base class without namespacing
-     * @param  string $class
-     * @return string
-     */
-    public function baseClassName($class)
-    {
-        $class = explode('\\', $class);
-        return array_pop($class);
-    }
-
-    /**
-     * Validate
-     * @return ValidationResult
-     */
-    public function validate()
-    {
-        $valid = true;
-        $message = null;
-        $type = $this->Type;
-
-        // Check if empty strings
-        switch ($type) {
-            case 'URL':
-            case 'Email':
-            case 'Phone':
-                if ($this->{$type} == '') {
-                    $valid = false;
-                    $message = _t(
-                        __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
-                        'You must enter a {TypeLabel}',
-                        [
-                            'TypeLabel' => $this->TypeLabel
-                        ]
-                    );
-                }
-                break;
-            case 'File':
-            case 'SiteTree':
-                if ($type && empty($this->{$type.'ID'})) {
-                    $valid = false;
-                    $message = _t(
-                        __CLASS__ . '.VALIDATIONERROR_OBJECT',
-                        'Please select a {TypeLabel}',
-                        [
-                            'TypeLabel' => $this->TypeLabel
-                        ]
-                    );
-                }
-                break;
-        }
-        // if its already failed don't bother checking the rest
-        if ($valid) {
-            switch ($type) {
-                case 'URL':
-                    $allowedFirst = ['#', '/'];
-                    if (!in_array(substr($this->URL, 0, 1), $allowedFirst) && !filter_var($this->URL, FILTER_VALIDATE_URL)) {
-                        $valid = false;
-                        $message = _t(
-                            __CLASS__ . '.VALIDATIONERROR_VALIDURL',
-                            'Please enter a valid URL.  Be sure to include http:// for an external URL. or begin your internal url/anchor with a "/" character'
-                        );
-                    }
-                    break;
-                case 'Email':
-                    if (!filter_var($this->Email, FILTER_VALIDATE_EMAIL)) {
-                        $valid = false;
-                        $message = _t(
-                            __CLASS__ . '.VALIDATIONERROR_VALIDEMAIL',
-                            'Please enter a valid Email address'
-                        );
-                    }
-                    break;
-                case 'Phone':
-                    if (!preg_match("/^\+?[0-9a-zA-Z\-\s]*[\,\#]?[0-9\-\s]*$/", $this->Phone)) {
-                        $valid = false;
-                        $message = _t(
-                            __CLASS__ . '.VALIDATIONERROR_VALIDPHONE',
-                            'Please enter a valid Phone number'
-                        );
-                    }
-                    break;
-            }
-        }
-
-        $result = ValidationResult::create();
-        if (!$valid) {
-            $result->addError($message);
-        }
-
-        $this->extend('updateValidate', $result);
-
-        return $result;
     }
 }

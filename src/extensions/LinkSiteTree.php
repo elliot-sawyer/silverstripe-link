@@ -10,7 +10,7 @@ use SilverStripe\ORM\DataExtension;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**
- * Add sitetree type to link field
+ * Add sitetree type to link object
  *
  * @package silverstripe-link
  */
@@ -73,6 +73,51 @@ class LinkSiteTree extends DataExtension
             $fields
                 ->dataFieldByName('SiteTreeID')
                 ->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function updateIsCurrent(&$status)
+    {
+        $owner = $this->owner;
+        if (
+            $owner->Type == 'SiteTree' &&
+            isset($owner->SiteTreeID) &&
+            $currentPage = $owner->CurrentPage
+        ){
+            $status = $currentPage->isCurrent();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function updateIsSection(&$status)
+    {
+        $owner = $this->owner;
+        if (
+            $owner->Type == 'SiteTree' &&
+            isset($owner->SiteTreeID) &&
+            $currentPage = $owner->CurrentPage
+        ){
+            $status = $currentPage->isSection();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function updateIsOrphaned(&$status)
+    {
+        $owner = $this->owner;
+        if (
+            $owner->Type == 'SiteTree' &&
+            isset($owner->SiteTreeID) &&
+            $currentPage = $owner->CurrentPage
+        ){
+            $status = $currentPage->isOrphaned();
         }
     }
 }
