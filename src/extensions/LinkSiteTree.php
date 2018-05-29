@@ -85,9 +85,10 @@ class LinkSiteTree extends DataExtension
         if (
             $owner->Type == 'SiteTree' &&
             isset($owner->SiteTreeID) &&
+            $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
         ){
-            $status = $currentPage->isCurrent();
+            $status = $currentPage === $owner->SiteTree() || $currentPage->ID === $owner->SiteTreeID;
         }
     }
 
@@ -100,9 +101,10 @@ class LinkSiteTree extends DataExtension
         if (
             $owner->Type == 'SiteTree' &&
             isset($owner->SiteTreeID) &&
+            $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
         ){
-            $status = $currentPage->isSection();
+            $status = $owner->isCurrent() || in_array($owner->SiteTreeID, $currentPage->getAncestors()->column());
         }
     }
 
@@ -115,9 +117,18 @@ class LinkSiteTree extends DataExtension
         if (
             $owner->Type == 'SiteTree' &&
             isset($owner->SiteTreeID) &&
+            $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
         ){
-            $status = $currentPage->isOrphaned();
+            // Always false for root pages
+            if (empty($owner->SiteTree()->ParentID)) {
+                $status = false;
+                return;
+            }
+
+            // Parent must exist and not be an orphan itself
+            $parent = $this->Parent();
+            $status = !$parent || !$parent->exists() || $parent->isOrphaned();
         }
     }
 }
