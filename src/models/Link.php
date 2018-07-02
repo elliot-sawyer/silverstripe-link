@@ -603,7 +603,9 @@ class Link extends DataObject
     {
         $isCurrent = null;
         $this->extend('UpdateLinkOrCurrent', $isCurrent);
-        return $isCurrent ? 'current' : 'link';
+        return $isCurrent
+            ? static::config()->get('linking_mode_current')
+            : static::config()->get('linking_mode_default');
     }
 
     /**
@@ -615,7 +617,9 @@ class Link extends DataObject
     {
         $isSection = null;
         $this->extend('UpdateLinkOrSection', $isSection);
-        return $isSection ? 'section' : 'link';
+        return $isSection
+            ? static::config()->get('linking_mode_section')
+            : static::config()->get('linking_mode_default');
     }
 
     /**
