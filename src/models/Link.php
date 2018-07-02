@@ -33,6 +33,24 @@ class Link extends DataObject
     private static $table_name = 'Link';
 
     /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_default = 'link';
+
+    /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_current = 'current';
+
+    /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_section = 'section';
+
+    /**
      * Database fields
      * @var array
      */
@@ -609,11 +627,11 @@ class Link extends DataObject
     public function LinkingMode()
     {
         if ($this->isCurrent()) {
-            return 'current';
+            return static::config()->get('linking_mode_current');
         } elseif ($this->isSection()) {
-            return 'section';
+            return static::config()->get('linking_mode_section');
         } else {
-            return 'link';
+            return static::config()->get('linking_mode_default');
         }
     }
 
