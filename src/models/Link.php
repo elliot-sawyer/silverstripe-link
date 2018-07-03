@@ -2,7 +2,6 @@
 
 namespace gorriecoe\Link\Models;
 
-use InvalidArgumentException;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\OptionsetField;
@@ -660,25 +659,15 @@ class Link extends DataObject
     }
 
     /**
-     * Returns the base class without namespacing
-     * @param  string $class
-     * @return string
-     */
-    public function baseClassName($class)
-    {
-        $class = explode('\\', $class);
-        return array_pop($class);
-    }
-
-    /**
      * Renders an HTML anchor attribute for this link
-     * @return HTML
+     * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
     public function forTemplate()
     {
         $link = '';
         if ($this->LinkURL) {
-            $link = $this->renderWith($this->RenderTemplates);
+            $templateSuffix = $this->style ? '_' . $this->style : '';
+            $link = $this->renderWith($this->getViewerTemplates($templateSuffix));
         }
         $this->extend('updateTemplate', $link);
         return $link;
@@ -693,33 +682,5 @@ class Link extends DataObject
     public function getLayout()
     {
         return $this->forTemplate();
-    }
-
-    /**
-     * Returns a list of rendering templates
-     * @return array
-     */
-    public function getRenderTemplates()
-    {
-        $ClassName = $this->ClassName;
-
-        if (is_object($ClassName)) $ClassName = get_class($ClassName);
-
-        if (!is_subclass_of($ClassName, DataObject::class)) {
-            throw new InvalidArgumentException($ClassName . ' is not a subclass of DataObject');
-        }
-
-        $templates = [];
-        while ($next = get_parent_class($ClassName)) {
-            $baseClassName = $this->baseClassName($ClassName);
-            if ($this->style) {
-                $templates[] = $baseClassName . '_' . $this->style;
-            }
-            $templates[] = $baseClassName;
-            if ($next == DataObject::class) {
-                return $templates;
-            }
-            $ClassName = $next;
-        }
     }
 }
