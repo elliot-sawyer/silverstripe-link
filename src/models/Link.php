@@ -314,13 +314,13 @@ class Link extends DataObject
     }
 
     /**
-     * If the title is empty, set it to getLinkURL()
-     * @return string
+     * If the title is empty, set it to default
      */
-    public function onAfterWrite()
+    public function onBeforeWrite()
     {
-        parent::onAfterWrite();
-        if (!$this->Title) {
+        parent::onBeforeWrite();
+
+        if (empty($this->Title)) {
             switch ($this->Type) {
                 case 'URL':
                 case 'Email':
@@ -338,8 +338,6 @@ class Link extends DataObject
                     }
                     break;
             }
-
-            $this->write();
         }
     }
 
