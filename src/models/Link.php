@@ -13,8 +13,9 @@ use SilverStripe\Forms\TabSet;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBBoolean;
+use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\ValidationResult;
-use SilverStripe\Core\Convert;
 use SilverStripe\Control\Director;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
@@ -23,6 +24,17 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
  *
  * @package silverstripe
  * @subpackage silverstripe-link
+ *
+ * @property string Title
+ * @property string Type
+ * @property string URL
+ * @property string Email
+ * @property string Phone
+ * @property boolean OpenInNewWindow
+ * @property string Template
+ * @property int FileID
+ *
+ * @method File|null File()
  */
 class Link extends DataObject
 {
@@ -55,13 +67,13 @@ class Link extends DataObject
      * @var array
      */
     private static $db = [
-        'Title' => 'Varchar(255)',
-        'Type' => 'Varchar(50)',
-        'URL' => 'Varchar(255)',
-        'Email' => 'Varchar(255)',
-        'Phone' => 'Varchar(30)',
-        'OpenInNewWindow' => 'Boolean',
-        'Template' => 'Varchar(255)'
+        'Title' => DBVarchar::class,
+        'Type' => DBVarchar::class . '(50)',
+        'URL' => DBVarchar::class,
+        'Email' => DBVarchar::class,
+        'Phone' => DBVarchar::class . '(30)',
+        'OpenInNewWindow' => DBBoolean::class,
+        'Template' => DBVarchar::class,
     ];
 
     /**
