@@ -683,4 +683,41 @@ class Link extends DataObject
     {
         return $this->forTemplate();
     }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canView($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canEdit($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canDelete($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @param array $context
+     * @return bool
+     */
+    public function canCreate($member = null, $context = [])
+    {
+        return true;
+    }
 }
