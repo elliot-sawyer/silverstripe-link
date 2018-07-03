@@ -559,7 +559,7 @@ class Link extends DataObject
     public function getCurrentPage()
     {
         $currentPage = Director::get_current_page();
-        if ($currentPage instanceof ContentController) {
+        if (get_class($currentPage) === 'SilverStripe\CMS\Controllers\ContentController') {
             $currentPage = $currentPage->data();
         }
         return $currentPage;
