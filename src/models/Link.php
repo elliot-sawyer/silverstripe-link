@@ -529,7 +529,7 @@ class Link extends DataObject
      */
     public function getTargetAttr()
     {
-        return $this->OpenInNewWindow ? " target='_blank'" : null;
+        return $this->OpenInNewWindow ? " target='_blank' rel='noopener'" : null;
     }
 
     /**
