@@ -11,6 +11,7 @@ composer require gorriecoe/silverstripe-link
 
 - silverstripe/framework ^4.0
 - unclecheese/display-logic ^2.0
+- giggsey/libphonenumber-for-php ^8.0
 
 ## Suggestion
 
@@ -152,7 +153,23 @@ $this->obj('Phone')->PhoneFriendly()
 Template
 ```
 {$Phone.PhoneFriendly}
+
 ```
+
+Additional methods are available to modify the output
+```
+{$Phone.PhoneFriendly.E164} = +6480074992488
+{$Phone.PhoneFriendly.National} = 80074992488
+{$Phone.PhoneFriendly.International} = +64 80074992488
+{$Phone.PhoneFriendly.RFC3966} = tel:+64-80074992488
+```
+
+You could also choose to format the number in the way it is dialled from another country
+```
+{$Phone.PhoneFriendly.International.ofCountry('GB')}
+```
+
+For more information check put https://github.com/giggsey/libphonenumber-for-php
 
 ##### LinkFriendly or URLFriendly
 Converts a DBString to a url safe string.  This can be useful for anchors.
