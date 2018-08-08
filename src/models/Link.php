@@ -452,8 +452,7 @@ class Link extends DataObject
                 $LinkURL = $this->Email ? 'mailto:' . $this->Email : null;
                 break;
             case 'Phone':
-                $phone = $this->obj('Phone')->PhoneFriendly();
-                $LinkURL = $phone ? 'tel:' . $phone : null;
+                $LinkURL = $this->obj('Phone')->PhoneFriendly()->RFC3966();
                 break;
             case 'File':
             case 'SiteTree':
