@@ -14,8 +14,9 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
-use SilverStripe\Core\Convert;
 use SilverStripe\Control\Director;
+use SilverStripe\View\SSViewer;
+use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**
@@ -33,35 +34,17 @@ class Link extends DataObject
     private static $table_name = 'Link';
 
     /**
-     * @config
-     * @var string
-     */
-    private static $linking_mode_default = 'link';
-
-    /**
-     * @config
-     * @var string
-     */
-    private static $linking_mode_current = 'current';
-
-    /**
-     * @config
-     * @var string
-     */
-    private static $linking_mode_section = 'section';
-
-    /**
      * Database fields
      * @var array
      */
     private static $db = [
-        'Title' => 'Varchar(255)',
+        'Title' => 'Varchar',
         'Type' => 'Varchar(50)',
-        'URL' => 'Varchar(255)',
-        'Email' => 'Varchar(255)',
+        'URL' => 'Varchar',
+        'Email' => 'Varchar',
         'Phone' => 'Varchar(30)',
         'OpenInNewWindow' => 'Boolean',
-        'Template' => 'Varchar(255)'
+        'Template' => 'Varchar'
     ];
 
     /**
@@ -121,6 +104,24 @@ class Link extends DataObject
         'TargetAttr' => 'HTMLFragment',
         'IDAttr' => 'HTMLFragment'
     ];
+
+    /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_default = 'link';
+
+    /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_current = 'current';
+
+    /**
+     * @config
+     * @var string
+     */
+    private static $linking_mode_section = 'section';
 
     /**
      * @var string custom CSS classes for template
@@ -302,13 +303,13 @@ class Link extends DataObject
     }
 
     /**
-     * If the title is empty, set it to getLinkURL()
-     * @return string
+     * Event handler called before writing to the database.
+     * If the title is empty, set a default based on the link.
      */
-    public function onAfterWrite()
+    public function onBeforeWrite()
     {
-        parent::onAfterWrite();
-        if (!$this->Title) {
+        parent::onBeforeWrite();
+        if (empty($this->Title)) {
             switch ($this->Type) {
                 case 'URL':
                 case 'Email':
@@ -326,8 +327,6 @@ class Link extends DataObject
                     }
                     break;
             }
-
-            $this->write();
         }
     }
 
@@ -519,7 +518,7 @@ class Link extends DataObject
      */
     public function getTargetAttr()
     {
-        return $this->OpenInNewWindow ? " target='_blank'" : null;
+        return $this->OpenInNewWindow ? " target='_blank' rel='noopener'" : null;
     }
 
     /**
@@ -576,7 +575,7 @@ class Link extends DataObject
     public function isSection()
     {
         $isSection = false;
-        $this->extend('UpdateIsSection', $isSection);
+        $this->extend('updateIsSection', $isSection);
         return $isSection;
     }
 
@@ -590,7 +589,7 @@ class Link extends DataObject
     public function isOrphaned()
     {
         $isOrphaned = false;
-        $this->extend('UpdateIsOrphaned', $isOrphaned);
+        $this->extend('updateIsOrphaned', $isOrphaned);
         return $isOrphaned;
     }
 
@@ -602,10 +601,12 @@ class Link extends DataObject
     public function LinkOrCurrent()
     {
         $isCurrent = null;
-        $this->extend('UpdateLinkOrCurrent', $isCurrent);
-        return $isCurrent
-            ? static::config()->get('linking_mode_current')
-            : static::config()->get('linking_mode_default');
+        $this->extend('updateLinkOrCurrent', $isCurrent);
+        if ($isCurrent) {
+            return $this->config()->get('linking_mode_current');
+        } else {
+            return $this->config()->get('linking_mode_default');
+        }
     }
 
     /**
@@ -616,10 +617,12 @@ class Link extends DataObject
     public function LinkOrSection()
     {
         $isSection = null;
-        $this->extend('UpdateLinkOrSection', $isSection);
-        return $isSection
-            ? static::config()->get('linking_mode_section')
-            : static::config()->get('linking_mode_default');
+        $this->extend('updateLinkOrSection', $isSection);
+        if ($isSection) {
+            return $this->config()->get('linking_mode_section');
+        } else {
+            return $this->config()->get('linking_mode_default');
+        }
     }
 
     /**
@@ -631,11 +634,11 @@ class Link extends DataObject
     public function LinkingMode()
     {
         if ($this->isCurrent()) {
-            return static::config()->get('linking_mode_current');
+            return $this->config()->get('linking_mode_current');
         } elseif ($this->isSection()) {
-            return static::config()->get('linking_mode_section');
+            return $this->config()->get('linking_mode_section');
         } else {
-            return static::config()->get('linking_mode_default');
+            return $this->config()->get('linking_mode_default');
         }
     }
 
@@ -662,7 +665,7 @@ class Link extends DataObject
 
     /**
      * Renders an HTML anchor attribute for this link
-     * @return HTML
+     * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
     public function forTemplate()
     {
@@ -699,7 +702,9 @@ class Link extends DataObject
             throw new InvalidArgumentException($ClassName . ' is not a subclass of DataObject');
         }
 
-        $templates = [];
+        $templates = [
+            'type' => 'Includes'
+        ];
         while ($next = get_parent_class($ClassName)) {
             $baseClassName = $this->baseClassName($ClassName);
             if ($this->style) {
@@ -711,5 +716,42 @@ class Link extends DataObject
             }
             $ClassName = $next;
         }
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canView($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canEdit($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @return bool
+     */
+    public function canDelete($member = null)
+    {
+        return true;
+    }
+
+    /**
+     * @param \SilverStripe\Security\Member|null $member
+     * @param array $context
+     * @return bool
+     */
+    public function canCreate($member = null, $context = [])
+    {
+        return true;
     }
 }
