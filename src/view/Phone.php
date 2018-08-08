@@ -3,8 +3,8 @@
 namespace gorriecoe\Link\View;
 
 use libphonenumber\PhoneNumberFormat;
-use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use \libphonenumber\PhoneNumber;
 use SilverStripe\View\ViewableData;
 
 /**
@@ -15,14 +15,14 @@ use SilverStripe\View\ViewableData;
 class Phone extends ViewableData
 {
     /**
-     * @var string
-     */
-    protected $phoneNumber = null;
-
-    /**
      * @var \libphonenumber\PhoneNumberUtil
      */
     protected $library;
+
+    /**
+     * @var \libphonenumber\PhoneNumber
+     */
+    protected $instance;
 
     /**
      * @var int
@@ -30,45 +30,59 @@ class Phone extends ViewableData
     protected $phoneNumberFormat = PhoneNumberFormat::E164;
 
     /**
-     * The provided phone country.
+     * The country the user is dialing from.
      *
      * @var string
      */
-    protected $country = 'NZ';
+    protected $fromCountry;
+
+    private static $default_country = 'NZ';
 
     public function __construct($phone)
     {
-        $this->phoneNumber = $phone;
         $this->library = PhoneNumberUtil::getInstance();
+        $country = $this->config()->get('default_country');
+        $this->instance = $this->library->parse($phone, $country);
         parent::__construct($phone);
     }
 
     /**
      * Format the phone number in international format.
+     *
+     * @return gorriecoe\Link\View\Phone
      */
     public function International()
     {
         $this->phoneNumberFormat = PhoneNumberFormat::INTERNATIONAL;
         return $this;
     }
+
     /**
      * Format the phone number in national format.
+     *
+     * @return gorriecoe\Link\View\Phone
      */
     public function National()
     {
         $this->phoneNumberFormat = PhoneNumberFormat::NATIONAL;
         return $this;
     }
+
     /**
-     * Format the phone number in E164 format.
+     * Format the phone number in E164 format
+     *
+     * @return gorriecoe\Link\View\Phone.
      */
     public function E164()
     {
         $this->phoneNumberFormat = PhoneNumberFormat::E164;
         return $this;
     }
+
     /**
      * Format the phone number in RFC3966 format.
+     *
+     * @return gorriecoe\Link\View\Phone
      */
     public function RFC3966()
     {
@@ -80,24 +94,37 @@ class Phone extends ViewableData
      * Set the country to which the phone number belongs to.
      *
      * @param string $country
+     * @return gorriecoe\Link\View\Phone
      */
-    public function ofCountry($country)
+    public function To($country)
     {
-        $this->country = $country;
+        $country = $this->library->getMetadataForRegion($country);
+        $this->instance->setCountryCode($country->getCountryCode());
         return $this;
     }
 
     /**
-     * Get the PhoneNumber instance of the current number.
+     * Set the country the user is dialing from.
      *
-     * @return \libphonenumber\PhoneNumber
+     * @param string $country
+     * @return gorriecoe\Link\View\Phone
      */
-    public function getInstance()
+    public function From($country)
     {
-        return $this->library->parse(
-            $this->phoneNumber,
-            $this->country
-        );
+        $this->fromCountry = $country;
+        return $this;
+    }
+
+    /**
+     * Sets whether this phone number uses a leading zero.
+     *
+     * @param bool $value True to use italian leading zero, false otherwise.
+     * @return gorriecoe\Link\View\Phone
+     */
+    public function LeadingZero($value = true)
+    {
+        $this->instance->setItalianLeadingZero($value);
+        return $this;
     }
 
     /**
@@ -105,11 +132,17 @@ class Phone extends ViewableData
      */
     public function Render()
     {
-        $value = $this->library->format(
-            $this->Instance,
-            $this->phoneNumberFormat
-        );
-        return $value;
+        if ($this->fromCountry) {
+            return $this->library->formatOutOfCountryCallingNumber(
+                $this->instance,
+                $this->fromCountry
+            );
+        } else {
+            return $this->library->format(
+                $this->instance,
+                $this->phoneNumberFormat
+            );
+        }
     }
 
     /**

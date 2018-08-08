@@ -117,14 +117,14 @@ gorriecoe\Link\Models\Link:
 
 Link has 3 options for defining html id, automatic, define-able or both.
 
-To apply automatic id's add the following to your config
+To apply automatic id's add the following to your config.
 ```yaml
 gorriecoe\Link\Models\Link:
   extensions:
     - gorriecoe\Link\Extensions\AutomaticMarkupID
 ```
 
-To apply input defineable id's add the following to your config
+To apply input defineable id's add the following to your config.
 ```yaml
 gorriecoe\Link\Models\Link:
   extensions:
@@ -144,7 +144,7 @@ gorriecoe\Link\Models\Link:
 Link has a few methods to help manipulate DBString's.
 
 ##### PhoneFriendly
-Converts a string to a phone number e.g 0800PIZZAHUT becomes 080074992488
+Converts a string to a phone number e.g 0800PIZZAHUT becomes 080074992488.
 
 PHP
 ```php
@@ -156,7 +156,7 @@ Template
 
 ```
 
-Additional methods are available to modify the output
+Additional methods are available to modify the output of phone numbers.
 ```
 {$Phone.PhoneFriendly.E164} = +6480074992488
 {$Phone.PhoneFriendly.National} = 80074992488
@@ -164,9 +164,17 @@ Additional methods are available to modify the output
 {$Phone.PhoneFriendly.RFC3966} = tel:+64-80074992488
 ```
 
-You could also choose to format the number in the way it is dialled from another country
+Define the country the user is dialing from
 ```
-{$Phone.PhoneFriendly.International.ofCountry('GB')}
+{$Phone.PhoneFriendly.From('GB')}
+```
+Define the country the phone belongs to.
+```
+{$Phone.PhoneFriendly.To('NZ')}
+```
+And define both to and from.
+```
+{$Phone.PhoneFriendly.From('GB').To('NZ')} or {$Phone.PhoneFriendly.To('NZ').From('GB')}
 ```
 
 For more information check put https://github.com/giggsey/libphonenumber-for-php
