@@ -16,7 +16,8 @@
   "homepage": "http://github.com/gorriecoe/silverstripe-link",
   "require": {
     "silverstripe/framework": "^4",
-    "unclecheese/display-logic": "^2"
+    "unclecheese/display-logic": "^2",
+    "giggsey/libphonenumber-for-php": "^8.0"
   },
   "extra": {
     "installer-name": "link"
