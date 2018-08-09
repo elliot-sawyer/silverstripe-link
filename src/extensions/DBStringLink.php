@@ -37,6 +37,9 @@ class DBStringLink extends DataExtension
      */
     public function PhoneFriendly()
     {
-        return Phone::create($this->owner->value);
+        $value = $this->owner->value;
+        if ($value) {
+            return Phone::create($value);
+        }
     }
 }
