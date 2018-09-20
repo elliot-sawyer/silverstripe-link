@@ -1,4 +1,7 @@
 # Silverstripe link
+
+[![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/E1E5HWRR)
+
 Adds a Link Object that can be link to a URL, Email, Phone number, an internal Page or File.
 
 ## Installation
