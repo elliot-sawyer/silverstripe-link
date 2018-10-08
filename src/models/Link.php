@@ -67,6 +67,17 @@ class Link extends DataObject
     ];
 
     /**
+     * Defines a default list of filters for the search context
+     * @var array
+     */
+    private static $searchable_fields = [
+        'Title',
+        'URL',
+        'Email',
+        'Phone'
+    ];
+
+    /**
      * A map of styles that are available in the cms for
      * users to select from.
      *
