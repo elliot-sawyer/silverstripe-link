@@ -468,14 +468,20 @@ class Link extends DataObject
                 break;
             case 'File':
             case 'SiteTree':
-                if ($type && $component = $this->getComponent($type)) {
+                if ($component = $this->getComponent($type)) {
                     if (!$component->exists()) {
                         $LinkURL = false;
                     }
                     if ($component->hasMethod('Link')) {
                         $LinkURL = $component->Link() . $this->Anchor;
                     } else {
-                        $LinkURL = _t(__CLASS__ . '.LINKMETHODMISSING', "Please implement a Link() method on your dataobject \"$type\"");
+                        $LinkURL = _t(
+                            __CLASS__ . '.LINKMETHODMISSING',
+                            'Please implement a Link() method on your dataobject "{type}"',
+                            [
+                                'type' => $type
+                            ]
+                        );
                     }
                 }
                 break;
