@@ -440,7 +440,7 @@ class Link extends DataObject
     {
         $i18nStyles = [];
         foreach ($this->styles as $key => $label) {
-            $i18nStyles[$key] = _t(__CLASS__ . '.STYLE'.strtoupper($key), $label);
+            $i18nStyles[$key] = _t(__CLASS__ . '.STYLE' . strtoupper($key), $label);
         }
         $this->extend('updatei18nStyles', $i18nStyles);
         return $i18nStyles;
