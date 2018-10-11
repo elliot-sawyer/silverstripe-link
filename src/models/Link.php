@@ -321,17 +321,18 @@ class Link extends DataObject
     {
         parent::onBeforeWrite();
         if (empty($this->Title)) {
-            switch ($this->Type) {
+            $type = $this->Type;
+            switch ($type) {
                 case 'URL':
                 case 'Email':
                 case 'Phone':
-                    $this->Title = $this->{$this->Type};
+                    $this->Title = $this->getField($type);
                     break;
                 case 'SiteTree':
                     $this->Title = $this->SiteTree()->MenuTitle;
                     break;
                 default:
-                    if ($this->Type && $component = $this->getComponent($this->Type)) {
+                    if ($this->getRelationType($type) == 'has_one' && $component = $this->getComponent($type)) {
                         $this->Title = $component->Title;
                     } else {
                         $this->Title = 'Link-' . $this->ID;
