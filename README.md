@@ -29,6 +29,31 @@ If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-lin
 
 - [Gorrie Coe](https://github.com/gorriecoe)
 
+## Usage
+
+```php
+<?php
+
+use gorriecoe\Link\Models\Link;
+
+class MyClass extends DataObject
+{
+    private static $has_one = [
+        'Button' => Link::class
+    ];
+
+    private static $many_many = [
+        'Buttons' => Link::class
+    ];
+
+    private static $many_many_extraFields = [
+        'Buttons' => [
+            'Sort' => 'Int' // Required for all many_many relationships
+        ]
+    ];
+}
+```
+
 ### Template options
 
 Basic usage
