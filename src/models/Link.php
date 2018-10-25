@@ -18,6 +18,8 @@ use SilverStripe\Control\Director;
 use SilverStripe\View\SSViewer;
 use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
+use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
+use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
 
 /**
  * Link
@@ -25,7 +27,8 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
  * @package silverstripe
  * @subpackage silverstripe-link
  */
-class Link extends DataObject
+class Link extends DataObject implements
+    ScaffoldingProvider
 {
     /**
      * Defines the database table name
@@ -135,6 +138,18 @@ class Link extends DataObject
     private static $linking_mode_section = 'section';
 
     /**
+     * Provides a quick way to define additional methods for provideGraphQLScaffolding as Fields
+     * @return Array
+     */
+    private static $gql_fields = [];
+
+    /**
+     * Provides a quick way to define additional methods for provideGraphQLScaffolding as Nested Queries
+     * @var Array
+     */
+    private static $gql_nested_queries = [];
+
+    /**
      * @var string custom CSS classes for template
      */
     protected $classes = [];
@@ -143,6 +158,7 @@ class Link extends DataObject
      * @var string custom style for template
      */
     protected $style;
+
 
     /**
      * @return FieldList
@@ -340,6 +356,60 @@ class Link extends DataObject
                     break;
             }
         }
+    }
+
+    public function provideGraphQLScaffolding(SchemaScaffolder $scaffolder)
+    {
+        $type = $scaffolder->type($this->ClassName);
+
+        $type->addAllFields()
+            ->addFields($this->gqlFields())
+            ->operation(SchemaScaffolder::READ)
+                ->setName('readLinks')
+                ->setUsePagination(false)
+                ->end()
+            ->operation(SchemaScaffolder::READ_ONE)
+                ->setName('readOneLink')
+                ->end()
+            ->operation(SchemaScaffolder::CREATE)
+                ->setName('createLink')
+                ->end()
+            ->operation(SchemaScaffolder::UPDATE)
+                ->setName('updateLink')
+                ->end()
+            ->operation(SchemaScaffolder::DELETE)
+                ->setName('deleteLink')
+                ->end()
+            ->end();
+        foreach ($this->gqlNestedQueries() as $query => $paginated) {
+            $type->nestedQuery($query)
+                ->setUsePagination($paginated)
+                ->end();
+        }
+        return $scaffolder;
+    }
+
+    /**
+     * Provides a quick way to define additional methods to provideGraphQLScaffolding as Fields
+     * @return Array
+     */
+    public function gqlFields()
+    {
+        $fields = $this->config()->get('gql_fields');
+        $this->extend('updateGqlFields', $fields);
+        $fields = array_merge(['LinkURL'], $fields);
+        return $fields;
+    }
+
+    /**
+     * Provides a quick way to define additional methods to provideGraphQLScaffolding as Nested Queries
+     * @return Array
+     */
+    public function gqlNestedQueries()
+    {
+        $nested = $this->config()->get('gql_nested_queries');
+        $this->extend('updateGqlNestedQueries', $nested);
+        return $nested;
     }
 
     /**

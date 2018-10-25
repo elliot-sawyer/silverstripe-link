@@ -25,3 +25,5 @@ SilverStripe\GraphQL\Controller:
     queries:
       link: gorriecoe\Link\GraphQL\LinkQueryCreator
       links: gorriecoe\Link\GraphQL\LinksQueryCreator
+    scaffolding_providers:
+      - gorriecoe\Link\Models\Link
