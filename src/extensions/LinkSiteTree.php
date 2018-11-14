@@ -54,7 +54,7 @@ class LinkSiteTree extends DataExtension
         $fields->insertAfter(
             'Type',
             Wrapper::create(
-                TreeDropdownField::create(
+                $sitetreeField = TreeDropdownField::create(
                     'SiteTreeID',
                     _t(__CLASS__ . '.PAGE', 'Page'),
                     SiteTree::class
@@ -67,12 +67,12 @@ class LinkSiteTree extends DataExtension
             )
             ->displayIf('Type')->isEqualTo('SiteTree')->end()
         );
+        
+        $sitetreeField->setTitleField('MenuTitle');
 
         // Display warning if the selected page is deleted or unpublished
         if ($owner->SiteTreeID && !$owner->SiteTree()->isPublished()) {
-            $fields
-                ->dataFieldByName('SiteTreeID')
-                ->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
+            $sitetreeField->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
         }
     }
 
