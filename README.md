@@ -38,10 +38,18 @@ use gorriecoe\Link\Models\Link;
 
 class MyClass extends DataObject
 {
+    // Option 1: Use as single element
     private static $has_one = [
         'Button' => Link::class
     ];
+    
+    // Option 2: Use as many elements exclusive to this record.
+    // See "Usage with has_many below"
+    private static $has_many = [
+        'Buttons' => Link::class
+    ];
 
+    // Option 3: Use as many elements shared with other records
     private static $many_many = [
         'Buttons' => Link::class
     ];
@@ -52,6 +60,19 @@ class MyClass extends DataObject
         ]
     ];
 }
+```
+
+### Usage with has_many
+
+Since links rely on sorting, they need a `Sort` column.
+For `many_many` relationships, this can be defined on `many_many_extraFields`.
+On a `has_many`, the `Link` type needs to store the sorting information directly.
+You can achieve this by adding the following extension to `Link`:
+
+```yaml
+gorriecoe\Link\Models\Link:
+  extensions:
+    - gorriecoe\Link\Extensions\SortableLink
 ```
 
 ### Template options
