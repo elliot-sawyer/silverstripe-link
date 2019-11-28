@@ -20,6 +20,8 @@ use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
+use SilverStripe\Assets\Image;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 
 /**
  * Link
@@ -49,6 +51,7 @@ class Link extends DataObject implements
         'Phone' => 'Varchar(30)',
         'OpenInNewWindow' => 'Boolean',
         'Template' => 'Varchar',
+        'UseIcon' => 'Boolean',
         'LinkIconClass' => 'Varchar',
     ];
 
@@ -102,6 +105,10 @@ class Link extends DataObject implements
         'Email' => 'Email address',
         'Phone' => 'Phone number',
         'File' => 'File on this website',
+    ];
+
+    private static $defaults = [
+        'DisplayTitle' => 1,
     ];
 
     /**
@@ -196,6 +203,10 @@ class Link extends DataObject implements
                     _t(__CLASS__ . '.TITLE', 'Title')
                 )
                 ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
+                CheckboxField::create(
+                    'DisplayTitle',
+                    _t(__CLASS__ . '.SHOWTITLE', 'Show title in link')
+                ),
                 OptionsetField::create(
                     'Type',
                     _t(__CLASS__ . '.LINKTYPE', 'Type'),
@@ -239,7 +250,22 @@ class Link extends DataObject implements
                 )
                 ->displayIf('Type')->isEqualTo('URL')
                 ->orIf()->isEqualTo('File')
-                ->orIf()->isEqualTo('SiteTree')->end()
+                ->orIf()->isEqualTo('SiteTree')->end(),
+                CheckboxField::create(
+                    'UseIcon',
+                    _t(__CLASS__ . '.USEICON', 'Use icon')
+                ),
+                Wrapper::create(
+                    UploadField::create(
+                        'LinkIcon',
+                        _t(__CLASS__ . '.LINKICON', 'Link icon')
+                    ),
+                    TextField::create(
+                        'LinkIconClass',
+                        _t(__CLASS__ . '.LINKICONCLASS', 'Link icon class')
+                    )
+                )
+                ->displayIf('UseIcon')->isChecked()->end(),
             ]
         );
 
