@@ -22,6 +22,11 @@ en:
     STYLE: Style
     TITLE: Title
     URL: URL
+    SHOWTITLE: Show title in link
+    LINKICON: Link icon
+    USEICON: Use icon
+    LINKICONALT: Link icon alt text
+    LINKICONCLASS: Link icon class
     VALIDATIONERROR_OBJECT: 'Please select a {LinkType}'
     VALIDATIONERROR_VALIDEMAIL: 'Please enter a valid Email address'
     VALIDATIONERROR_VALIDPHONE: 'Please enter a valid Phone number'
