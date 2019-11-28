@@ -42,12 +42,14 @@ class Link extends DataObject implements
      */
     private static $db = [
         'Title' => 'Varchar',
+        'DisplayTitle' => 'Boolean',
         'Type' => 'Varchar(50)',
         'URL' => 'Varchar',
         'Email' => 'Varchar',
         'Phone' => 'Varchar(30)',
         'OpenInNewWindow' => 'Boolean',
-        'Template' => 'Varchar'
+        'Template' => 'Varchar',
+        'LinkIconClass' => 'Varchar',
     ];
 
     /**
@@ -55,7 +57,8 @@ class Link extends DataObject implements
      * @var array
      */
     private static $has_one = [
-        'File' => File::class
+        'File' => File::class,
+        'LinkIcon' => Image::class,
     ];
 
     /**
