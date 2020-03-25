@@ -47,7 +47,7 @@ class Link extends DataObject implements
         'Email' => 'Varchar',
         'Phone' => 'Varchar(30)',
         'OpenInNewWindow' => 'Boolean',
-        'Template' => 'Varchar'
+        'SelectedStyle' => 'Varchar'
     ];
 
     /**
@@ -155,9 +155,9 @@ class Link extends DataObject implements
     protected $classes = [];
 
     /**
-     * @var string custom style for template
+     * @var string custom style for template typically defined by the template.
      */
-    protected $style;
+    protected $template_style;
 
 
     /**
@@ -177,11 +177,12 @@ class Link extends DataObject implements
             $fields->addFieldToTab(
                 'Root.Main',
                 DropdownField::create(
-                    'Style',
+                    'SelectedStyle',
                     _t(__CLASS__ . '.STYLE', 'Style'),
                     $styles
                 )
-                ->setEmptyString('Default')
+                ->setEmptyString('Default'),
+                'Type'
             );
         }
 
@@ -433,8 +434,18 @@ class Link extends DataObject implements
      */
     public function setStyle($style)
     {
-        $this->style = $style;
+        $this->template_style = $style;
         return $this;
+    }
+
+    /**
+     * Get style defined by the template or admin
+     * @param string $style
+     * @return Link
+     */
+    public function getStyle()
+    {
+        return $this->SelectedStyle ? $this->SelectedStyle : $this->template_style;
     }
 
     /**
@@ -570,8 +581,10 @@ class Link extends DataObject implements
      */
     public function getClass()
     {
-        if ($this->style) {
-            $this->setClass($this->style);
+        if ($this->SelectedStyle) {
+            $this->setClass($this->SelectedStyle);
+        } else if ($this->template_style) {
+            $this->setClass($this->template_style);
         }
 
         $classes = $this->classes;
@@ -794,7 +807,7 @@ class Link extends DataObject implements
         ];
         while ($next = get_parent_class($ClassName)) {
             $baseClassName = $this->baseClassName($ClassName);
-            if ($this->style) {
+            if ($this->Style) {
                 $templates[] = $baseClassName . '_' . $this->style;
             }
             $templates[] = $baseClassName;
