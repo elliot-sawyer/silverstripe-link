@@ -146,6 +146,18 @@ gorriecoe\Link\Models\Link:
     - SiteTree
 ```
 
+#### Default link types
+
+The default types available are:
+
+```YAML
+URL: URL
+Email: Email address
+Phone: Phone number
+File: File on this website
+SiteTree: Page on this website
+```
+
 ### Add html id attribute
 
 Link has 3 options for defining html id, automatic, define-able or both.
