@@ -14,11 +14,12 @@ Composer is the recommended way of installing SilverStripe modules.
 -   unclecheese/display-logic ^2.0
 -   giggsey/libphonenumber-for-php ^8.0
 
-## Suggestion
+## Suggestions
 
 -   [gorriecoe/silverstripe-linkfield](https://github.com/gorriecoe/silverstripe-linkfield). Silverstripe link opts to separated from linkfield to give the opportunity for developers to choose their own relationship manager such as gridfield.  I'm happy to add any other suggested modules to this list.
 -   [gorriecoe/silverstripe-logoutlink](https://github.com/gorriecoe/silverstripe-logoutlink)
 -   [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink)
+-   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon)
 -   [gorriecoe/silverstripe-menu](https://github.com/gorriecoe/silverstripe-menu)
 
 ## Embed
