@@ -16,10 +16,25 @@ Composer is the recommended way of installing SilverStripe modules.
 
 ## Suggestions
 
--   [gorriecoe/silverstripe-linkfield](https://github.com/gorriecoe/silverstripe-linkfield). Silverstripe link opts to separated from linkfield to give the opportunity for developers to choose their own relationship manager such as gridfield.  I'm happy to add any other suggested modules to this list.
+### Relationship suggestions
+
+Silverstripe link opts to separated from linkfield to give the opportunity for developers to choose their own relationship manager such as gridfield.  I'm happy to add any other suggested modules to this list.
+
+-   [gorriecoe/silverstripe-linkfield](https://github.com/gorriecoe/silverstripe-linkfield).
+-   [silvershop/silverstripe-hasonefield](https://github.com/silvershop/silverstripe-hasonefield)
+
+### Link enhancements
+
+This is a list of modules that enhance links by adding additional options and/or types.
+
 -   [gorriecoe/silverstripe-logoutlink](https://github.com/gorriecoe/silverstripe-logoutlink)
 -   [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink)
 -   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon)
+
+### Other suggestions
+
+This is a list of modules that use links at its core.
+
 -   [gorriecoe/silverstripe-menu](https://github.com/gorriecoe/silverstripe-menu)
 
 ## Embed
