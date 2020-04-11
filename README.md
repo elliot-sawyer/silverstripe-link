@@ -18,6 +18,7 @@ composer require gorriecoe/silverstripe-link
 
 - [gorriecoe/silverstripe-linkfield](https://github.com/gorriecoe/silverstripe-linkfield). Silverstripe link opts to separated from linkfield to give the opportunity for developers to choose their own relationship manager such as gridfield.  I'm happy to add any other suggested modules to this list.
 - [gorriecoe/silverstripe-logoutlink](https://github.com/gorriecoe/silverstripe-logoutlink)
+- [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink)
 
 ## Embed
 
