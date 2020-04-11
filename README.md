@@ -44,6 +44,7 @@ If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-lin
 ## Maintainers
 
 -   [Gorrie Coe](https://github.com/gorriecoe)
+-   [Elliot Sawyer](https://github.com/elliot-sawyer)
 
 ## Usage
 
