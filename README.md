@@ -68,6 +68,12 @@ Define link classes
 
 ```html
 <% loop Links %>
+    {$addExtraClass('button')}
+<% end_loop %>
+```
+or
+```html
+<% loop Links %>
     {$setClass('button')}
 <% end_loop %>
 ```

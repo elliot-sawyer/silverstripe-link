@@ -418,13 +418,23 @@ class Link extends DataObject implements
      * @param string $class CSS classes.
      * @return Link
      */
-    public function setClass($class)
+    public function addExtraClass($class)
     {
         $classes = ($class) ? explode(' ', $class) : [];
         foreach ($classes as $key => $value) {
             $this->classes[$value] = $value;
         }
         return $this;
+    }
+
+    /**
+     * This is an alias to {@link addExtraClass()}
+     * @param string $class CSS classes.
+     * @return Link
+     */
+    public function setClass($class)
+    {
+        return $this->addExtraClass($class);
     }
 
     /**
