@@ -29,6 +29,7 @@ This is a list of modules that enhance links by adding additional options and/or
 
 -   [gorriecoe/silverstripe-securitylinks](https://github.com/gorriecoe/silverstripe-securitylinks)
 -   [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink)
+-   [gorriecoe/silverstripe-advancedemaillinks](https://github.com/gorriecoe/silverstripe-advancedemaillinks)
 -   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon)
 
 ### Other suggestions
