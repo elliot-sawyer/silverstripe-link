@@ -27,7 +27,7 @@ Silverstripe link opts to be separated from linkfield to give the opportunity fo
 
 This is a list of modules that enhance links by adding additional options and/or types.
 
--   [gorriecoe/silverstripe-logoutlink](https://github.com/gorriecoe/silverstripe-logoutlink)
+-   [gorriecoe/silverstripe-securitylinks](https://github.com/gorriecoe/silverstripe-securitylinks)
 -   [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink)
 -   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon)
 
@@ -37,7 +37,7 @@ This is a list of modules that use links at its core.
 
 -   [gorriecoe/silverstripe-menu](https://github.com/gorriecoe/silverstripe-menu)
 
-## Embed
+### Embed
 
 If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-linkable) and are looking for Embed functionality check out [silverstripe-embed](https://github.com/gorriecoe/silverstripe-embed)
 
