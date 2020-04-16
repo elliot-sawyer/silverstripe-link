@@ -38,6 +38,10 @@ This is a list of modules that use links at its core.
 
 -   [gorriecoe/silverstripe-menu](https://github.com/gorriecoe/silverstripe-menu)
 
+### Migration
+
+-   [Linkable](https://github.com/sheadawson/silverstripe-linkable) to Link migrator https://github.com/dynamic/silverstripe-link-migrator
+
 ### Embed
 
 If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-linkable) and are looking for Embed functionality check out [silverstripe-embed](https://github.com/gorriecoe/silverstripe-embed)
