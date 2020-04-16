@@ -170,12 +170,17 @@ class Link extends DataObject implements
                 'Root',
                 Tab::create('Main')
             )
-            ->setTitle(_t('SiteTree.TABMAIN', 'Main'))
+            ->setTitle(_t('SiteTree.TABMAIN', 'Main')),
+            TabSet::create(
+                'Root',
+                Tab::create('Settings')
+            )
+            ->setTitle(_t('SiteTree.TABSETTINGS', 'Settings'))
         );
 
         if ($styles = $this->i18nStyles) {
             $fields->addFieldToTab(
-                'Root.Main',
+                'Root.Settings',
                 DropdownField::create(
                     'SelectedStyle',
                     _t(__CLASS__ . '.STYLE', 'Style'),
