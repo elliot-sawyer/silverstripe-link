@@ -43,22 +43,31 @@ class LinkSiteTree extends DataExtension
     ];
 
     /**
+     * Defines the label used in the sitetree dropdown.
+     * @param String $sitetree_field_label
+     */
+    private static $sitetree_field_label = 'MenuTitle';
+
+    /**
      * Update Fields
      * @param FieldList $fields
      */
     public function updateCMSFields(FieldList $fields)
     {
         $owner = $this->owner;
+        $config = $owner->config();
+        $sitetree_field_label = $config->get('sitetree_field_label') ? : 'MenuTitle';
 
         // Insert site tree field after the file selection field
         $fields->insertAfter(
             'Type',
             Wrapper::create(
-                TreeDropdownField::create(
+                $sitetreeField = TreeDropdownField::create(
                     'SiteTreeID',
                     _t(__CLASS__ . '.PAGE', 'Page'),
                     SiteTree::class
-                ),
+                )
+                ->setTitleField($sitetree_field_label),
                 TextField::create(
                     'Anchor',
                     _t(__CLASS__ . '.ANCHOR', 'Anchor/Querystring')
@@ -70,9 +79,7 @@ class LinkSiteTree extends DataExtension
 
         // Display warning if the selected page is deleted or unpublished
         if ($owner->SiteTreeID && !$owner->SiteTree()->isPublished()) {
-            $fields
-                ->dataFieldByName('SiteTreeID')
-                ->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
+            $sitetreeField->setDescription(_t(__CLASS__ . '.DELETEDWARNING', 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'));
         }
     }
 
