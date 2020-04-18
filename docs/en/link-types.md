@@ -29,4 +29,29 @@ gorriecoe\Link\Models\Link:
 
 ## Adding custom link types
 
-To add custom linnk types refer to [Adding custom link types](extending#adding-custom-link-types)
+To add custom link types refer to [Adding custom link types](extending#adding-custom-link-types)
+
+## Preset link types
+
+To add preset link types you can install [silverstripe-ymlpresetlinks](https://github.com/gorriecoe/silverstripe-ymlpresetlinks):
+
+```
+composer require gorriecoe/silverstripe-ymlpresetlinks
+```
+
+Then in your config.yml apply the following examples;
+
+```yml
+gorriecoe\Link\Models\Link:
+  preset_types:
+    'hello-world':
+      Title: "Hello world alert"
+      LinkURL: "javascript:alert('Hello World!');"
+    'back-to-top':
+      Title: "Scroll to top"
+      LinkURL: "#back-to-top"
+    'google':
+      Title: "Google"
+      LinkURL: "https://www.google.com/"
+      OpenInNewWindow: true
+```
