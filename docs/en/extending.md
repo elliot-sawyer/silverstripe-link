@@ -19,6 +19,12 @@ class CustomLinkExtension extends DataExtension
         'Product' => 'Product',
     ];
 
+    /**
+     * A map of object types that can be linked to
+     * Custom dataobjects can be added to this
+     *
+     * @var array
+     **/
     private static $types = [
         'Product' => 'A Product on this site',
     ];
@@ -37,6 +43,17 @@ class CustomLinkExtension extends DataExtension
                 ->setHasEmptyDefault(true)
             )->displayIf('Type')->isEqualTo('Product')->end()
         );
+    }
+
+    /**
+     * Update LinkURL
+     */
+    public function updateLinkURL(&$linkURL)
+    {
+        $owner = $this->owner;
+        if ($owner->Type == 'Product') {
+            $linkURL = ''; // Product url
+        }
     }
 ```
 
