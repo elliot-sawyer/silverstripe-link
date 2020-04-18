@@ -31,3 +31,7 @@ If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-
 - [Phone number output](string-manipulation#phonefriendly)
 - [Link/anchor friendly output](string-manipulation#linkfriendly)
 - [Extending](extending)
+
+### Embed
+
+If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-linkable) and are looking for Embed functionality check out [silverstripe-embed](https://github.com/gorriecoe/silverstripe-embed)
