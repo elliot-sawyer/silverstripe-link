@@ -17,6 +17,7 @@ $this->obj('Phone')->PhoneFriendly()
 ```
 
 Template
+
 ```html
 {$Phone.PhoneFriendly}
 ```

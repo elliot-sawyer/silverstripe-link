@@ -16,7 +16,7 @@ File: File on this website
 SiteTree: Page on this website
 ```
 
-## Limit allowed Link types
+## Limit allowed link types
 
 To limit types define them in your site config.yml file as below.
 

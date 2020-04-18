@@ -2,7 +2,7 @@
 title: Usage
 ---
 
-## Example usage
+## Has one example
 
 For the example below you will need to install [linkfield](https://github.com/gorriecoe/silverstripe-linkfield)
 
@@ -22,6 +22,44 @@ class MyClass extends DataObject
         'Button' => Link::class
     ];
 
+    /**
+     * CMS Fields
+     * @return FieldList
+     */
+    public function getCMSFields()
+    {
+        $fields = parent::getCMSFields();
+        $fields->addFieldsToTab(
+            'Root.Main',
+            [
+                LinkField::create(
+                    'Button',
+                    'Button',
+                    $this
+
+            ]
+        );
+        return $fields;
+    }
+}
+```
+
+## Many many example
+
+For the example below you will need to install [linkfield](https://github.com/gorriecoe/silverstripe-linkfield)
+
+```sh
+composer require gorriecoe/silverstripe-linkfield
+```
+
+```php
+<?php
+
+use gorriecoe\Link\Models\Link;
+use gorriecoe\LinkField\LinkField;
+
+class MyClass extends DataObject
+{
     private static $many_many = [
         'Buttons' => Link::class
     ];
@@ -43,10 +81,50 @@ class MyClass extends DataObject
             'Root.Main',
             [
                 LinkField::create(
-                    'Button',
-                    'Button',
+                    'Buttons',
+                    'Buttons',
                     $this
-                ),
+                )
+            ]
+        );
+        return $fields;
+    }
+}
+```
+
+
+## Has many example
+
+Although it is possible to add a has many relationship it is *NOT* recommmended.
+
+For the example below you will need to install [linkfield](https://github.com/gorriecoe/silverstripe-linkfield)
+
+```sh
+composer require gorriecoe/silverstripe-linkfield
+```
+
+```php
+<?php
+
+use gorriecoe\Link\Models\Link;
+use gorriecoe\LinkField\LinkField;
+
+class MyClass extends DataObject
+{
+    private static $has_many = [
+        'Buttons' => Link::class
+    ];
+
+    /**
+     * CMS Fields
+     * @return FieldList
+     */
+    public function getCMSFields()
+    {
+        $fields = parent::getCMSFields();
+        $fields->addFieldsToTab(
+            'Root.Main',
+            [
                 LinkField::create(
                     'Buttons',
                     'Buttons',
@@ -57,4 +135,12 @@ class MyClass extends DataObject
         return $fields;
     }
 }
+```
+
+In your config.yml
+
+```yml
+gorriecoe\Link\Models\Link:
+  db:
+    Sort: Int
 ```

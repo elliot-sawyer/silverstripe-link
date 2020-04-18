@@ -9,6 +9,7 @@ Sometimes you might have custom DataObject types that you would like CMS users t
 ```php
 
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\ORM\DataExtension;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 

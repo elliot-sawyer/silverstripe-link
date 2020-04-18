@@ -6,11 +6,13 @@ Adds a Link Object that can be link to a URL, Email, Phone number, an internal P
 
 Composer is the recommended way of installing SilverStripe modules.
 
-    composer require gorriecoe/silverstripe-link
+```sh
+composer require gorriecoe/silverstripe-link
+```
 
 ## Documentation
 
-Check out [Documentation](https://gorriecoe.github.io/silverstripe-link/en)
+Check out [documentation](https://gorriecoe.github.io/silverstripe-link/en)
 
 ## Maintainers
 

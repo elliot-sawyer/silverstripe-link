@@ -12,7 +12,7 @@ title: Silverstripe link
 
 ## Installing silverstripe link
 
-First download the silverstripe link using Composer in your project root:
+First download silverstripe link using composer command in your project root:
 
 ```
 composer require gorriecoe/silverstripe-link
@@ -25,6 +25,9 @@ If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-
 ## Contents
 
 -   [Usage](usage)
+    -   [Has one](usage#has-one-example)
+    -   [Many many](usage#many-many-example)
+    -   [Has many](usage#has-many-example)
 -   [Link types](link-types)
 -   [Templating and styling](templating-styling)
 -   [Html ID attribute](html-id)
