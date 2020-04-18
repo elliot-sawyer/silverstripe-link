@@ -2,6 +2,14 @@
 title: Link Icon
 ---
 
+## Installation
+
+To add icons to links you can either make your own [extension](extending) or install [silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon) with the following:
+
+```
+composer require gorriecoe/silverstripe-linkicon
+```
+
 ## Template
 
 Add `$Icon` to your `Link.ss` file.
@@ -13,7 +21,9 @@ Add `$Icon` to your `Link.ss` file.
 <% end_if %>
 ```
 
-## Options
+### Options
+
+#### Define folder
 
 Define folder to store the icons assets into.
 
@@ -22,12 +32,16 @@ gorriecoe\Link\Models\Link:
   icon_asset_folder: 'SomeFolderName' // Defaults to 'Icons'
 ```
 
+#### Define tab
+
 Defines tab to insert the icon_folder fields into.
 
 ```yml
 gorriecoe\Link\Models\Link:
   icon_tab: 'SomeTabName' // Defaults to 'Settings'
 ```
+
+#### Define allowed file extensions
 
 Defines the allowed file extensions for the icon field.
 
@@ -44,10 +58,10 @@ gorriecoe\Link\Models\Link:
 
 ## Link icon only
 
-Step by step instructions to setup icon only links.
+Below is step by step instructions to setup icon only links.
 
 ```
-composer require gorriecoe/silverstripe-link gorriecoe/silverstripe-linkicon
+composer require gorriecoe/silverstripe-linkicon
 ```
 
 In your config.yml add the following:
