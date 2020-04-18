@@ -1,5 +1,5 @@
 ---
-title: Link Icon
+title: Link icon
 ---
 
 ## Installation

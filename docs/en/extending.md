@@ -7,6 +7,12 @@ title: Extending
 Sometimes you might have custom DataObject types that you would like CMS users to be able to create Links to. This can be achieved by adding a DataExtension to the Link DataObject, see the below example for making Product objects Linkable.
 
 ```php
+
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\Requirements;
+use UncleCheese\DisplayLogic\Forms\Wrapper;
+
 class CustomLinkExtension extends DataExtension
 {
     private static $has_one = [
@@ -19,8 +25,8 @@ class CustomLinkExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-		// Add a dropdown field containing your ProductList
-		$fields->addFieldToTab(
+        // Add a dropdown field containing your ProductList
+        $fields->addFieldToTab(
             'Root.Main',
             Wrapper::create(
                 DropdownField::create(
@@ -30,14 +36,13 @@ class CustomLinkExtension extends DataExtension
                 )
                 ->setHasEmptyDefault(true)
             )->displayIf('Type')->isEqualTo('Product')->end()
-
         );
-	}
+    }
 ```
 
 In your config.yml
 
-```YAML
+```yml
 gorriecoe\Link\Models\Link:
   extensions:
     - CustomLinkExtension
