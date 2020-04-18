@@ -26,8 +26,7 @@ If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-
 
 -   [Usage](usage)
 -   [Link types](link-types)
--   [Templating](templating)
--   [Styling](styling)
+-   [Templating and styling](templating-styling)
 -   [Html ID attribute](html-id)
 -   [Add an icon](link-icon)
 -   [DBString manipulation](string-manipulation)
