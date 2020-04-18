@@ -1,14 +1,8 @@
 ---
-title: Getting started
+title: Silverstripe link
 ---
 
-## Installation
-
-Composer is the recommended way of installing SilverStripe modules.
-
-```
-composer require gorriecoe/silverstripe-link
-```
+# Installation
 
 ## Requirements
 
@@ -16,6 +10,25 @@ composer require gorriecoe/silverstripe-link
 -   [unclecheese/display-logic](https://github.com/unclecheese/silverstripe-display-logic) ^2.0
 -   [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) ^8.0
 
+## Installing silverstripe link
+
+First download the silverstripe link using Composer in your project root:
+
+```
+composer require gorriecoe/silverstripe-link
+```
+
 ### Migration
 
 If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-linkable) checkout [Link migrator](https://github.com/dynamic/silverstripe-link-migrator) from dynamic.
+
+## Contents
+
+- [Usage](/usage)
+- [Templating](/templating)
+- [Styling](/styling)
+- [Usage](/usage)
+- [DBString manipulation](/string-manipulation)
+- [Phone number output](/string-manipulation#phonefriendly)
+- [Link/anchor friendly output](/string-manipulation#linkfriendly)
+- [Extending](/extending)

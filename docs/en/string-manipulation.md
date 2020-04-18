@@ -8,7 +8,7 @@ Link has a few methods to help manipulate DBString's.
 
 ### PhoneFriendly
 
-Converts a string to a phone number e.g 0800PIZZAHUT becomes 080074992488.
+The method `PhoneFriendly` converts a string to a phone number e.g 0800PIZZAHUT becomes 080074992488.
 
 PHP
 
@@ -49,7 +49,7 @@ Additional methods are available to modify the output of phone numbers.
 
 For more information check put <https://github.com/giggsey/libphonenumber-for-php>
 
-### LinkFriendly or URLFriendly
+### LinkFriendly
 
 Converts a DBString to a url safe string.  This can be useful for anchors.
 
