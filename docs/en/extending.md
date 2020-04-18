@@ -10,7 +10,6 @@ Sometimes you might have custom DataObject types that you would like CMS users t
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\View\Requirements;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 class CustomLinkExtension extends DataExtension
