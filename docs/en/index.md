@@ -54,3 +54,4 @@ If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-lin
 -   [gorriecoe/silverstripe-directionslink](https://github.com/gorriecoe/silverstripe-directionslink). Add directions link type
 -   [gorriecoe/silverstripe-advancedemaillinks](https://github.com/gorriecoe/silverstripe-advancedemaillinks). Add additional email options to email type
 -   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon). Add an icon to link output
+-   [gorriecoe/silverstripe-ymlpresetlinks](https://github.com/gorriecoe/silverstripe-ymlpresetlinks). Add preset link types from your config yml

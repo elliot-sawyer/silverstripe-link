@@ -73,3 +73,4 @@ The following modules enhance link but can also be used as working examples for 
 -   [Add directions link type](https://github.com/gorriecoe/silverstripe-directionslink)
 -   [Add additional email options to email type](https://github.com/gorriecoe/silverstripe-advancedemaillinks)
 -   [Add an icon to link output](https://github.com/gorriecoe/silverstripe-linkicon)
+-   [Add preset link types from your config yml](https://github.com/gorriecoe/silverstripe-ymlpresetlinks)
