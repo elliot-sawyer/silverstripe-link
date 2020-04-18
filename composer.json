@@ -13,7 +13,7 @@
     "silverstripe",
     "link"
   ],
-  "homepage": "http://github.com/gorriecoe/silverstripe-link",
+  "homepage": "https://gorriecoe.github.io/silverstripe-link/en/",
   "require": {
     "silverstripe/framework": "^4",
     "unclecheese/display-logic": "^2",
