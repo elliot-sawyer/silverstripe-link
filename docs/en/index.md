@@ -6,7 +6,7 @@ title: Silverstripe link
 
 ## Requirements
 
--   [silverstripe/framework](https://github.com/silverstripe/silverstripe-framework) ^4.0
+-   [silverstripe/framework](enhttps://github.com/silverstripe/silverstripe-framework) ^4.0
 -   [unclecheese/display-logic](https://github.com/unclecheese/silverstripe-display-logic) ^2.0
 -   [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) ^8.0
 
@@ -24,11 +24,10 @@ If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-
 
 ## Contents
 
-- [Usage](/usage)
-- [Templating](/templating)
-- [Styling](/styling)
-- [Usage](/usage)
-- [DBString manipulation](/string-manipulation)
-- [Phone number output](/string-manipulation#phonefriendly)
-- [Link/anchor friendly output](/string-manipulation#linkfriendly)
-- [Extending](/extending)
+- [Usage](en/usage)
+- [Templating](en/templating)
+- [Styling](en/styling)
+- [DBString manipulation](en/string-manipulation)
+- [Phone number output](en/string-manipulation#phonefriendly)
+- [Link/anchor friendly output](en/string-manipulation#linkfriendly)
+- [Extending](en/extending)
