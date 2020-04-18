@@ -2,30 +2,44 @@
 title: Link Icon
 ---
 
-## Link icon only
+## Template
 
-Step by step instructions to setup link icon.
-
-```
-composer require gorriecoe/silverstripe-link gorriecoe/silverstripe-linkicon
-```
-
-In your config.yml add the following:
-
-```yml
-gorriecoe\Link\Models\Link:
-  icon_asset_folder: 'SomeFolderName' // Defaults to 'Icons'
-  icon_tab: 'SomeTabName' // Defaults to 'Settings'
-```
-
-Create a `Link.ss` file in your theme includes directory with the following:
-
+Add `$Icon` to your `Link.ss` file.
 ```
 <% if LinkURL %>
     <a{$IDAttr}{$ClassAttr} href="{$LinkURL}"{$TargetAttr}>
         {$Icon}{$Title}
     </a>
 <% end_if %>
+```
+
+## Options
+
+Define folder to store the icons assets into.
+
+```yml
+gorriecoe\Link\Models\Link:
+  icon_asset_folder: 'SomeFolderName' // Defaults to 'Icons'
+```
+
+Defines tab to insert the icon_folder fields into.
+
+```yml
+gorriecoe\Link\Models\Link:
+  icon_tab: 'SomeTabName' // Defaults to 'Settings'
+```
+
+Defines the allowed file extensions for the icon field.
+
+```yml
+gorriecoe\Link\Models\Link:
+  icon_allowed_extensions:
+    - 'gif'
+    - 'jpeg'
+    - 'jpg'
+    - 'png'
+    - 'bmp'
+    - 'ico'
 ```
 
 ## Link icon only
@@ -40,8 +54,6 @@ In your config.yml add the following:
 
 ```yml
 gorriecoe\Link\Models\Link:
-  icon_asset_folder: 'SomeFolderName' // Defaults to 'Icons'
-  icon_tab: 'SomeTabName' // Defaults to 'Settings'
   styles:
     icononly: Icon only
 ```

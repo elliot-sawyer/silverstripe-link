@@ -42,3 +42,12 @@ gorriecoe\Link\Models\Link:
   extensions:
     - CustomLinkExtension
 ```
+
+## Working examples
+
+The following modules enhance link but can also be used as working examples for what is possible.
+
+-   [Add security link types](https://github.com/gorriecoe/silverstripe-securitylinks)
+-   [Add directions link type](https://github.com/gorriecoe/silverstripe-directionslink)
+-   [Add additional email options to email type](https://github.com/gorriecoe/silverstripe-advancedemaillinks)
+-   [Add an icon to link output](https://github.com/gorriecoe/silverstripe-linkicon)
