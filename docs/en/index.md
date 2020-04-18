@@ -24,10 +24,10 @@ If you are migrating from [Linkable](https://github.com/sheadawson/silverstripe-
 
 ## Contents
 
-- [Usage](en/usage)
-- [Templating](en/templating)
-- [Styling](en/styling)
-- [DBString manipulation](en/string-manipulation)
-- [Phone number output](en/string-manipulation#phonefriendly)
-- [Link/anchor friendly output](en/string-manipulation#linkfriendly)
-- [Extending](en/extending)
+- [Usage](usage)
+- [Templating](templating)
+- [Styling](styling)
+- [DBString manipulation](string-manipulation)
+- [Phone number output](string-manipulation#phonefriendly)
+- [Link/anchor friendly output](string-manipulation#linkfriendly)
+- [Extending](extending)
