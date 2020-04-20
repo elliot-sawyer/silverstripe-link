@@ -161,6 +161,7 @@ class Link extends DataObject implements
 
 
     /**
+     * CMS Fields
      * @return FieldList
      */
     public function getCMSFields()
@@ -186,67 +187,82 @@ class Link extends DataObject implements
                     _t(__CLASS__ . '.STYLE', 'Style'),
                     $styles
                 )
-                ->setEmptyString('Default'),
+                ->setEmptyString(_t(__CLASS__ . '.DEFAULT', 'Default')),
                 'Type'
             );
         }
 
         $fields->addFieldsToTab(
             'Root.Main',
-            [
-                TextField::create(
-                    'Title',
-                    _t(__CLASS__ . '.TITLE', 'Title')
-                )
-                ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
-                OptionsetField::create(
-                    'Type',
-                    _t(__CLASS__ . '.LINKTYPE', 'Type'),
-                    $this->i18nTypes
-                )
-                ->setValue('URL'),
-                Wrapper::create(
-                    TreeDropdownField::create(
-                        'FileID',
-                        _t(__CLASS__ . '.FILE', 'File'),
-                        File::class,
-                        'ID',
-                        'Title'
-                    )
-                )
-                ->displayIf('Type')->isEqualTo('File')->end(),
-                Wrapper::create(
-                    TextField::create(
-                        'URL',
-                        _t(__CLASS__ . '.URL', 'URL')
-                    )
-                )
-                ->displayIf('Type')->isEqualTo('URL')->end(),
-                Wrapper::create(
-                    TextField::create(
-                        'Email',
-                        _t(__CLASS__ . '.EMAILADDRESS', 'Email Address')
-                    )
-                )
-                ->displayIf('Type')->isEqualTo('Email')->end(),
-                Wrapper::create(
-                    TextField::create(
-                        'Phone',
-                        _t(__CLASS__ . '.PHONENUMBER', 'Phone Number')
-                    )
-                )
-                ->displayIf('Type')->isEqualTo('Phone')->end(),
-                CheckboxField::create(
-                    'OpenInNewWindow',
-                    _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
-                )
-                ->displayIf('Type')->isEqualTo('URL')
-                ->orIf()->isEqualTo('File')
-                ->orIf()->isEqualTo('SiteTree')->end()
-            ]
+            $this->getCMSMainFields()
         );
 
         $this->extend('updateCMSFields', $fields);
+
+        return $fields;
+    }
+
+    /**
+     * CMS Main fields
+     * This is so other modules can access these fields without other tabs etc.
+     *
+     * @return Array
+     */
+    public function getCMSMainFields()
+    {
+        $fields = [
+            TextField::create(
+                'Title',
+                _t(__CLASS__ . '.TITLE', 'Title')
+            )
+            ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
+            OptionsetField::create(
+                'Type',
+                _t(__CLASS__ . '.LINKTYPE', 'Type'),
+                $this->i18nTypes
+            )
+            ->setValue('URL'),
+            Wrapper::create(
+                TreeDropdownField::create(
+                    'FileID',
+                    _t(__CLASS__ . '.FILE', 'File'),
+                    File::class,
+                    'ID',
+                    'Title'
+                )
+            )
+            ->displayIf('Type')->isEqualTo('File')->end(),
+            Wrapper::create(
+                TextField::create(
+                    'URL',
+                    _t(__CLASS__ . '.URL', 'URL')
+                )
+            )
+            ->displayIf('Type')->isEqualTo('URL')->end(),
+            Wrapper::create(
+                TextField::create(
+                    'Email',
+                    _t(__CLASS__ . '.EMAILADDRESS', 'Email Address')
+                )
+            )
+            ->displayIf('Type')->isEqualTo('Email')->end(),
+            Wrapper::create(
+                TextField::create(
+                    'Phone',
+                    _t(__CLASS__ . '.PHONENUMBER', 'Phone Number')
+                )
+            )
+            ->displayIf('Type')->isEqualTo('Phone')->end(),
+            CheckboxField::create(
+                'OpenInNewWindow',
+                _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
+            )
+            ->displayIf('Type')->isEqualTo('URL')
+            ->orIf()->isEqualTo('File')
+            ->orIf()->isEqualTo('SiteTree')->end()
+        ];
+
+        $this->extend('updateCMSMainFields', $fields);
 
         return $fields;
     }
