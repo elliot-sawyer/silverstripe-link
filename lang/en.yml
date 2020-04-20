@@ -1,4 +1,6 @@
 en:
+  SiteTree:
+    TABSETTINGS: Settings
   gorriecoe\Link\Extensions\DefineableMarkupID:
     ID: ID
     IDCUSTOMVALUE: 'Define an ID for the link.  This is particularly useful for google tracking.'
@@ -8,8 +10,10 @@ en:
     DELETEDWARNING: 'Warning: The selected page appears to have been deleted or unpublished. This link may not appear or may be broken in the frontend'
     PAGE: Page
   gorriecoe\Link\Models\Link:
+    DEFAULT: Default
     EMAILADDRESS: 'Email Address'
     FILE: File
+    LINKMETHODMISSING: 'Please implement a Link() method on your dataobject "{type}"'
     LINKTYPE: Type
     OPENINNEWWINDOW: 'Open link in a new window'
     OPTIONALTITLE: 'Optional. Will be auto-generated from link if left blank.'
@@ -22,7 +26,9 @@ en:
     STYLE: Style
     TITLE: Title
     URL: URL
-    VALIDATIONERROR_OBJECT: 'Please select a {LinkType}'
+    VALIDATIONERROR_OBJECT: 'Please select a {TypeLabel}'
     VALIDATIONERROR_VALIDEMAIL: 'Please enter a valid Email address'
     VALIDATIONERROR_VALIDPHONE: 'Please enter a valid Phone number'
     VALIDATIONERROR_VALIDURL: 'Please enter a valid URL.  Be sure to include http:// for an external URL. or begin your internal url/anchor with a "/" character'
+  gorriecoe\LinksManagment\Admin\LinksAdmin:
+    MENUTITLE: 'All links'
