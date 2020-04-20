@@ -55,3 +55,4 @@ If you are coming from [Linkable](https://github.com/sheadawson/silverstripe-lin
 -   [gorriecoe/silverstripe-advancedemaillinks](https://github.com/gorriecoe/silverstripe-advancedemaillinks). Add additional email options to email type
 -   [gorriecoe/silverstripe-linkicon](https://github.com/gorriecoe/silverstripe-linkicon). Add an icon to link output
 -   [gorriecoe/silverstripe-ymlpresetlinks](https://github.com/gorriecoe/silverstripe-ymlpresetlinks). Add preset link types from your config yml
+-   [gorriecoe/silverstripe-shorturl](https://github.com/gorriecoe/silverstripe-shorturl).  Provides an admin area to create and manage shortURLS.
