@@ -27,6 +27,16 @@ gorriecoe\Link\Models\Link:
     - SiteTree
 ```
 
+## Allow linking to folders
+
+By default, when the type is set to "File", folders cannot be selected.
+If you want to be able to link to folders, add the following in your site config.yml file:
+
+```yaml
+gorriecoe\Link\Models\Link:
+  link_to_folders: true
+```
+
 ## Adding custom link types
 
 To add custom link types refer to [Adding custom link types](extending#adding-custom-link-types)
