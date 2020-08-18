@@ -20,6 +20,7 @@ use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
+use SilverStripe\Assets\Folder;
 
 /**
  * Link
@@ -138,6 +139,13 @@ class Link extends DataObject implements
     private static $linking_mode_section = 'section';
 
     /**
+     * If false, when Type is "File", folders in the TreeDropdownField will not be selectable.
+     * @config
+     * @var boolean
+     */
+    private static $link_to_folders = false;
+
+    /**
      * Provides a quick way to define additional methods for provideGraphQLScaffolding as Fields
      * @return Array
      */
@@ -223,7 +231,7 @@ class Link extends DataObject implements
             )
             ->setValue('URL'),
             Wrapper::create(
-                TreeDropdownField::create(
+                $fileDropdown = TreeDropdownField::create(
                     'FileID',
                     _t(__CLASS__ . '.FILE', 'File'),
                     File::class,
@@ -261,6 +269,13 @@ class Link extends DataObject implements
             ->orIf()->isEqualTo('File')
             ->orIf()->isEqualTo('SiteTree')->end()
         ];
+
+        // Disable folders in dropdown if linking to folders is not allowed.
+        if (!$this->config()->get('link_to_folders')) {
+            $fileDropdown->setDisableFunction(function ($item) {
+                return is_a($item, Folder::class);
+            });
+        }
 
         $this->extend('updateCMSMainFields', $fields);
 
