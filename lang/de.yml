@@ -1,0 +1,34 @@
+de:
+  SiteTree:
+    TABSETTINGS: Einstellungen
+  gorriecoe\Link\Extensions\DefineableMarkupID:
+    ID: ID
+    IDCUSTOMVALUE: 'Definiere eine ID für den Link.  Dies ist besonders nützlich für Google-Tracking.'
+  gorriecoe\Link\Extensions\LinkSiteTree:
+    ANCHOR: Anchor/Querystring
+    ANCHORINFO: 'Beginne einen Anchor mit #, einen Querystring mit ?'
+    DELETEDWARNING: 'Warnung: Die ausgewählte Seite scheint gelöscht oder unveröffentlicht worden zu sein. Dieser Link erscheint möglicherweise nicht oder ist im Frontend unterbrochen'
+    PAGE: Page
+  gorriecoe\Link\Models\Link:
+    DEFAULT: Default
+    EMAILADDRESS: 'E-Mail-Adresse'
+    FILE: Datei
+    LINKMETHODMISSING: 'Bitte implementiere eine Link() Methode auf dem DataOject "{type}"'
+    LINKTYPE: Typ
+    OPENINNEWWINDOW: 'Link in einem neuen Fenster öffnen'
+    OPTIONALTITLE: 'Optional. Wird automatisch aus dem Link generiert, falls leer gelassen.'
+    PHONENUMBER: 'Telefonnummer'
+    PLURALNAME: Links
+    PLURALS:
+      one: 'Ein Link'
+      other: '{count} Links'
+    SINGULARNAME: Link
+    STYLE: Stil
+    TITLE: Titel
+    URL: URL
+    VALIDATIONERROR_OBJECT: 'Bitte wähle ein {TypeLabel}'
+    VALIDATIONERROR_VALIDEMAIL: 'Bitte gib eine gültige E-Mail-Adresse ein'
+    VALIDATIONERROR_VALIDPHONE: 'Bitte gib eine gültige Telefonnummer ein'
+    VALIDATIONERROR_VALIDURL: 'Bitte gib eine gültige URL ein. Geben Sie http:// für eine externe URL an, oder beginnen Sie Ihre interne URL/Anker mit einem "/"-Zeichen'
+  gorriecoe\LinksManagment\Admin\LinksAdmin:
+    MENUTITLE: 'Alle Links'
