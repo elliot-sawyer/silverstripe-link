@@ -2,6 +2,8 @@
 
 namespace gorriecoe\Link\Models;
 
+use gorriecoe\Link\Extensions\LinkSiteTree;
+use gorriecoe\Link\Extensions\SiteTreeLink;
 use InvalidArgumentException;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\CheckboxField;
@@ -27,6 +29,17 @@ use SilverStripe\Assets\Folder;
  *
  * @package silverstripe
  * @subpackage silverstripe-link
+ *
+ * @property string Title
+ * @property string Type
+ * @property string URL
+ * @property string Email
+ * @property string Phone
+ * @property bool OpenInNewWindow
+ * @property string SelectedStyle
+ * @property int FileID
+ * @method File File()
+ * @mixin LinkSiteTree
  */
 class Link extends DataObject implements
     ScaffoldingProvider
