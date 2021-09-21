@@ -5,6 +5,7 @@ SilverStripe\ORM\FieldType\DBString:
   extensions:
     - gorriecoe\Link\Extensions\DBStringLink
 ---
+Name: linkconfigcms
 Only:
   moduleexists: 'silverstripe/cms'
 ---
@@ -15,6 +16,7 @@ SilverStripe\CMS\Model\SiteTree:
   extensions:
     - gorriecoe\Link\Extensions\SiteTreeLink
 ---
+Name: linkconfiggraphql
 Only:
   moduleexists: silverstripe/graphql
 ---
