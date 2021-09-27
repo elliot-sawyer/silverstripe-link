@@ -6,6 +6,10 @@ use GraphQL\Type\Definition\Type;
 use SilverStripe\GraphQL\TypeCreator;
 use SilverStripe\GraphQL\Pagination\Connection;
 
+if (!class_exists(TypeCreator::class)) {
+    return;
+}
+
 /**
  * LinkTypeCreator
  *
