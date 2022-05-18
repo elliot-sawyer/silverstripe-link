@@ -2,6 +2,7 @@
 
 namespace gorriecoe\Link\Extensions;
 
+use gorriecoe\Link\Models\Link;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
@@ -13,6 +14,10 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
  * Add sitetree type to link object
  *
  * @package silverstripe-link
+ *
+ * @property Link|$this owner
+ * @property int SiteTreeID
+ * @method SiteTree SiteTree()
  */
 class LinkSiteTree extends DataExtension
 {
