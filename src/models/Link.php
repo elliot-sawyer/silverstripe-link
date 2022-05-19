@@ -514,11 +514,10 @@ class Link extends DataObject implements
     {
         $types = $this->config()->get('types');
 
+        $allowed_types = $this->config()->get('allowed_types');
         if ($this->allowed_types) {
             // Prioritise local field over global settings
             $allowed_types = $this->allowed_types;
-        } else {
-            $allowed_types = $this->config()->get('allowed_types');
         }
         if ($allowed_types) {
            foreach ($allowed_types as $type) {
