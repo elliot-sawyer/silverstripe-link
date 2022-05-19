@@ -1,0 +1,7 @@
+gorriecoe\Link\Models\Link:
+  fields:
+    '*': true
+    linkURL: String
+    layout: String
+    template: String
+  operations: '*'

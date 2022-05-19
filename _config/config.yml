@@ -18,14 +18,24 @@ SilverStripe\CMS\Model\SiteTree:
 ---
 Name: linkconfiggraphql
 Only:
-  moduleexists: silverstripe/graphql
+  classexists: SilverStripe\GraphQL\Manager
 ---
-SilverStripe\GraphQL\Controller:
-  schema:
-    types:
-      link: gorriecoe\Link\GraphQL\LinkTypeCreator
-    queries:
-      link: gorriecoe\Link\GraphQL\LinkQueryCreator
-      links: gorriecoe\Link\GraphQL\LinksQueryCreator
-    scaffolding_providers:
-      - gorriecoe\Link\Models\Link
+SilverStripe\GraphQL\Manager:
+  schemas:
+    default:
+      types:
+        link: gorriecoe\Link\GraphQL\LinkTypeCreator
+      queries:
+        link: gorriecoe\Link\GraphQL\LinkQueryCreator
+        links: gorriecoe\Link\GraphQL\LinksQueryCreator
+      scaffolding_providers:
+        - gorriecoe\Link\GraphQL\ScaffoldingProvider
+---
+Only:
+  classexists: SilverStripe\GraphQL\Schema\Schema
+---
+SilverStripe\GraphQL\Schema\Schema:
+  schemas:
+    default:
+      src:
+        - 'gorriecoe/silverstripe-link: _graphql'
