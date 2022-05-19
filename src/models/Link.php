@@ -2,6 +2,8 @@
 
 namespace gorriecoe\Link\Models;
 
+use gorriecoe\Link\Extensions\LinkSiteTree;
+use gorriecoe\Link\Extensions\SiteTreeLink;
 use InvalidArgumentException;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\CheckboxField;
@@ -15,11 +17,8 @@ use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Control\Director;
-use SilverStripe\View\SSViewer;
 use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
-use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
 use SilverStripe\Assets\Folder;
 
 /**
@@ -27,9 +26,19 @@ use SilverStripe\Assets\Folder;
  *
  * @package silverstripe
  * @subpackage silverstripe-link
+ *
+ * @property string Title
+ * @property string Type
+ * @property string URL
+ * @property string Email
+ * @property string Phone
+ * @property bool OpenInNewWindow
+ * @property string SelectedStyle
+ * @property int FileID
+ * @method File File()
+ * @mixin LinkSiteTree
  */
-class Link extends DataObject implements
-    ScaffoldingProvider
+class Link extends DataObject
 {
     /**
      * Defines the database table name
@@ -393,37 +402,6 @@ class Link extends DataObject implements
                     break;
             }
         }
-    }
-
-    public function provideGraphQLScaffolding(SchemaScaffolder $scaffolder)
-    {
-        $type = $scaffolder->type($this->ClassName);
-
-        $type->addAllFields()
-            ->addFields($this->gqlFields())
-            ->operation(SchemaScaffolder::READ)
-                ->setName('readLinks')
-                ->setUsePagination(false)
-                ->end()
-            ->operation(SchemaScaffolder::READ_ONE)
-                ->setName('readOneLink')
-                ->end()
-            ->operation(SchemaScaffolder::CREATE)
-                ->setName('createLink')
-                ->end()
-            ->operation(SchemaScaffolder::UPDATE)
-                ->setName('updateLink')
-                ->end()
-            ->operation(SchemaScaffolder::DELETE)
-                ->setName('deleteLink')
-                ->end()
-            ->end();
-        foreach ($this->gqlNestedQueries() as $query => $paginated) {
-            $type->nestedQuery($query)
-                ->setUsePagination($paginated)
-                ->end();
-        }
-        return $scaffolder;
     }
 
     /**

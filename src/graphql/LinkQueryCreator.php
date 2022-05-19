@@ -8,6 +8,9 @@ use SilverStripe\GraphQL\OperationResolver;
 use SilverStripe\GraphQL\QueryCreator;
 use gorriecoe\Link\Models\Link;
 
+if (!class_exists(QueryCreator::class)) {
+    return;
+}
 /**
  * LinkQueryCreator
  *
