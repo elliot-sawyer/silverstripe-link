@@ -1,25 +1,30 @@
 {
-  "name": "gorriecoe/silverstripe-link",
-  "description": "Adds a Link Object that can be link to a URL, Email, Phone number, an internal Page or File.",
-  "type": "silverstripe-vendormodule",
-  "license": "BSD-3-Clause",
-  "authors": [
-    {
-      "name": "Gorrie Coe",
-      "email": "gorriecoe@gmail.com"
+    "name": "gorriecoe/silverstripe-link",
+    "description": "Adds a Link Object that can be link to a URL, Email, Phone number, an internal Page or File.",
+    "type": "silverstripe-vendormodule",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Gorrie Coe",
+            "email": "gorriecoe@gmail.com"
+        }
+    ],
+    "keywords": [
+        "silverstripe",
+        "link"
+    ],
+    "homepage": "https://gorriecoe.github.io/silverstripe-link/en/",
+    "require": {
+        "silverstripe/framework": "^4 || ^5",
+        "unclecheese/display-logic": "^2 || ^3",
+        "giggsey/libphonenumber-for-php": "^8.0"
+    },
+    "extra": {
+        "installer-name": "link"
+    },
+    "autoload": {
+        "psr-4": {
+            "gorriecoe\\Link\\": "src/"
+        }
     }
-  ],
-  "keywords": [
-    "silverstripe",
-    "link"
-  ],
-  "homepage": "https://gorriecoe.github.io/silverstripe-link/en/",
-  "require": {
-    "silverstripe/framework": "^4 || ^5",
-    "unclecheese/display-logic": "^2 || ^3",
-    "giggsey/libphonenumber-for-php": "^8.0"
-  },
-  "extra": {
-    "installer-name": "link"
-  }
 }
