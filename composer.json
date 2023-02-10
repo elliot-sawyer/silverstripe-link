@@ -15,7 +15,7 @@
   ],
   "homepage": "https://gorriecoe.github.io/silverstripe-link/en/",
   "require": {
-    "silverstripe/framework": "^4",
+    "silverstripe/framework": "^4 || ^5",
     "unclecheese/display-logic": "^2",
     "giggsey/libphonenumber-for-php": "^8.0"
   },
