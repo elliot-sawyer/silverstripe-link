@@ -492,11 +492,12 @@ class Link extends DataObject
     {
         $types = $this->config()->get('types');
 
+        $allowed_types = $this->config()->get('allowed_types');
         if ($this->allowed_types) {
             // Prioritise local field over global settings
             $allowed_types = $this->allowed_types;
         }
-        if ($allowed_types = $this->config()->get('allowed_types')) {
+        if ($allowed_types) {
            foreach ($allowed_types as $type) {
                 if (!array_key_exists($type, $types)) {
                     user_error("{$type} is not a valid link type");
