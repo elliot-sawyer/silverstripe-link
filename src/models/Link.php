@@ -67,6 +67,10 @@ class Link extends DataObject
     private static $has_one = [
         'File' => File::class
     ];
+    
+    private static $owns = [
+       'File',   
+    ];
 
     /**
      * Defines summary fields commonly used in table columns
@@ -614,9 +618,10 @@ class Link extends DataObject
 
         $classes = $this->classes;
         $this->extend('updateClasses', $classes);
-        if (Count($classes)) {
+        if (count($classes)) {
             return implode(' ', $classes);
         }
+        return '';
     }
 
     /**
@@ -841,6 +846,7 @@ class Link extends DataObject
             }
             $ClassName = $next;
         }
+        return [];
     }
 
     /**
