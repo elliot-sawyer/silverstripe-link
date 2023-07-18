@@ -9,7 +9,7 @@ use gorriecoe\Link\View\Phone;
 /**
  * Adds methods to DBString to help manipulate the output suitable for links
  *
- * @package silverstripe-link
+ * @property \SilverStripe\ORM\FieldType\DBString&\gorriecoe\Link\Extensions\DBStringLink $owner
  */
 class DBStringLink extends DataExtension
 {

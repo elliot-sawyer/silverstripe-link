@@ -24,19 +24,20 @@ use SilverStripe\Assets\Folder;
 /**
  * Link
  *
- * @package silverstripe
- * @subpackage silverstripe-link
- *
- * @property string Title
- * @property string Type
- * @property string URL
- * @property string Email
- * @property string Phone
- * @property bool OpenInNewWindow
- * @property string SelectedStyle
- * @property int FileID
- * @method File File()
- * @mixin LinkSiteTree
+ * @property string $Anchor
+ * @property string $Title
+ * @property string $Type
+ * @property string $URL
+ * @property string $Email
+ * @property string $Phone
+ * @property bool $OpenInNewWindow
+ * @property string $SelectedStyle
+ * @property int $SiteTreeID
+ * @property int $FileID
+ * @method \SilverStripe\CMS\Model\SiteTree SiteTree()
+ * @method \SilverStripe\Assets\File File()
+ * @mixin \gorriecoe\Link\Extensions\LinkSiteTree
+ * @mixin \gorriecoe\LinkField\Extensions\LinkExtension
  */
 class Link extends DataObject
 {
