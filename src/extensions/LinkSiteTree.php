@@ -53,14 +53,9 @@ class LinkSiteTree extends DataExtension
 
     /**
      * Defines the label used in the sitetree dropdown.
-     * @param String $sitetree_field_label
+     * @param string $sitetree_field_label
      */
     private static $sitetree_field_label = 'MenuTitle';
-
-    /**
-     * @var string
-     */
-    private static $element_prefix = '#e';
 
     /**
      * Update Fields
@@ -70,7 +65,7 @@ class LinkSiteTree extends DataExtension
     {
         $owner = $this->owner;
         $config = $owner->config();
-        $sitetree_field_label = $config->get('sitetree_field_label') ? : 'MenuTitle';
+        $sitetree_field_label = $config->get('sitetree_field_label') ?: 'MenuTitle';
 
         // Get source data for the ElementID field
         $elenmentFieldSource = function ($pageID) {
@@ -81,8 +76,7 @@ class LinkSiteTree extends DataExtension
                     ['' => _t(__CLASS__ . '.SelectBlock', '(Select a block)')],
                     $elements
                 );
-            }
-            else {
+            } else {
                 $results = [
                     '' => _t(__CLASS__ . '.BlockIsNotAvailable', '(Block is not available for the selected page)')
                 ];
@@ -90,10 +84,10 @@ class LinkSiteTree extends DataExtension
 
             return $results;
         };
-        
+
         // Get field label for the ElementID field
         $elenmentFieldLabel = _t(__CLASS__  . '.SpecificBlockOnThePage', 'Specific Block on the Page');
-        
+
         // Additional information for the Anchor field
         $anchorIngoringInfo = _t(
             __CLASS__  . '.AnchorIngoringInfo',
@@ -110,19 +104,19 @@ class LinkSiteTree extends DataExtension
                     _t(__CLASS__ . '.PAGE', 'Page'),
                     SiteTree::class
                 )
-                ->setTitleField($sitetree_field_label)
-                ->setHasEmptyDefault(true),
+                    ->setTitleField($sitetree_field_label)
+                    ->setHasEmptyDefault(true),
                 DependentDropdownField::create(
                     'ElementID',
                     $elenmentFieldLabel,
                     $elenmentFieldSource
                 )
-                ->setDepends($sitetreeField),
+                    ->setDepends($sitetreeField),
                 TextField::create(
                     'Anchor',
                     _t(__CLASS__ . '.ANCHOR', 'Anchor/Querystring')
                 )
-                ->setDescription(_t(__CLASS__ . '.ANCHORINFO', 'Include # at the start of your anchor name or, ? at the start of your querystring') . $anchorIngoringInfo)
+                    ->setDescription(_t(__CLASS__ . '.ANCHORINFO', 'Include # at the start of your anchor name or, ? at the start of your querystring') . $anchorIngoringInfo)
             )
             ->displayIf('Type')->isEqualTo('SiteTree')->end()
         );
@@ -144,7 +138,7 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             $status = $currentPage === $owner->SiteTree() || $currentPage->ID === $owner->SiteTreeID;
         }
     }
@@ -160,7 +154,7 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             $status = $owner->isCurrent() || in_array($owner->SiteTreeID, $currentPage->getAncestors()->column());
         }
     }
@@ -176,7 +170,7 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             // Always false for root pages
             if (empty($owner->SiteTree()->ParentID)) {
                 $status = false;
@@ -199,7 +193,7 @@ class LinkSiteTree extends DataExtension
         if ($page = Page::get_by_id($pageID)) {
             if ($page->hasMethod('supportsElemental') && $page->supportsElemental()) {
                 $elementalAreas = $page->getElementalRelations();
-    
+
                 foreach ($elementalAreas as $areaName) {
                     foreach ($page->$areaName->Elements() as $element) {
                         $elements[$element->ID] = $element->Title;
@@ -216,13 +210,14 @@ class LinkSiteTree extends DataExtension
      */
     public function updateLinkURL(&$linkUrl)
     {
-        if ($linkUrl && $this->owner->Type === 'SiteTree' && $this->owner->ElementID) {
-            if ($this->owner->Anchor) {
+        $owner = $this->getOwner();
+        if ($linkUrl && $owner->Type === 'SiteTree' && $owner->ElementID) {
+            if ($owner->Anchor) {
                 $linkUrl = strtok($linkUrl, "?");
                 $linkUrl = strtok($linkUrl, "#");
             }
 
-            $linkUrl = $linkUrl . $this->owner->config()->get('element_prefix') . $this->owner->ElementID;
+            $linkUrl = $linkUrl . '#' . $owner->Element()->getAnchor();
         }
     }
 
