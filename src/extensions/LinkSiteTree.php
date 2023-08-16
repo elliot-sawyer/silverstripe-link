@@ -169,28 +169,6 @@ class LinkSiteTree extends DataExtension
         }
     }
 
-    /**
-     *  Get elements for the given page ID
-     */
-    public function getElements(int $pageID): array
-    {
-        $elements = [];
-
-        if ($page = Page::get_by_id($pageID)) {
-            if ($page->hasMethod('supportsElemental') && $page->supportsElemental()) {
-                $elementalAreas = $page->getElementalRelations();
-
-                foreach ($elementalAreas as $areaName) {
-                    foreach ($page->$areaName->Elements() as $element) {
-                        $elements[$element->ID] = $element->Title;
-                    }
-                }
-            }
-        }
-
-        return $elements;
-    }
-
 
     /**
      * {@inheritDoc}
