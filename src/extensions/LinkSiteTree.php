@@ -71,7 +71,8 @@ class LinkSiteTree extends DataExtension
             $anchorOptions = [];
             $page = Page::get_by_id($pageID);
             if($page) {
-                $anchorOptions = $page->getAnchorsOnPage();
+                $list = $page->getAnchorsOnPage();
+                $anchorOptions = array_combine($list, $list);
             }
 
             if (!empty($anchorOptions)) {
@@ -182,7 +183,7 @@ class LinkSiteTree extends DataExtension
         if (empty($owner->Title) && $owner->Type === "SiteTree" && $owner->SiteTreeID && $owner->ElementID && $element = $owner->Element()) {
             $owner->Title = $element->Title;
         }
-        $owner->Querystring = str_replace('?', '', $owner->QueryString);
-        $owner->Anchor = str_replace('#', '', $owner->Anchor);
+        $owner->Querystring = $owner->Querystring ? str_replace('?', '', (string) $owner->QueryString) : $owner->Querystring;
+        $owner->Anchor = $owner->Anchor ? str_replace('#', '', (string) $owner->Anchor) : $owner->Anchor;
     }
 }
