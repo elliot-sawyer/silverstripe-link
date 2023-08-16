@@ -67,9 +67,9 @@ class Link extends DataObject
     private static $has_one = [
         'File' => File::class
     ];
-    
+
     private static $owns = [
-       'File',   
+       'File',
     ];
 
     /**
@@ -276,7 +276,7 @@ class Link extends DataObject
             ->displayIf('Type')->isEqualTo('Phone')->end(),
             CheckboxField::create(
                 'OpenInNewWindow',
-                _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
+                _t(__CLASS__ . '.OPENINNEWWINDOW', 'Open link in a new window')
             )
             ->displayIf('Type')->isEqualTo('URL')
             ->orIf()->isEqualTo('File')
@@ -502,7 +502,7 @@ class Link extends DataObject
             $allowed_types = $this->allowed_types;
         }
         if ($allowed_types) {
-           foreach ($allowed_types as $type) {
+            foreach ($allowed_types as $type) {
                 if (!array_key_exists($type, $types)) {
                     user_error("{$type} is not a valid link type");
                 }
@@ -583,7 +583,24 @@ class Link extends DataObject
                         $LinkURL = false;
                     }
                     if ($component->hasMethod('Link')) {
-                        $LinkURL = $component->Link() . $this->Anchor;
+                        $LinkURL = $component->Link();
+
+                        // add QueryString
+                        if(!empty($this->QueryString)) {
+                            if(strpos($LinkURL, '?') === false && strpos($this->QueryString, '?') === false) {
+                                $LinkURL .= '?';
+                            }
+                            $LinkURL .= $this->QueryString;
+                        }
+
+                        // add anchor
+                        if(!empty($this->Anchor)) {
+                            if(strpos($LinkURL, '#') === false && strpos($this->Anchor, '#') === false) {
+                                $LinkURL .= '#';
+                            }
+                            $LinkURL .= $this->Anchor;
+                        }
+
                     } else {
                         $LinkURL = _t(
                             __CLASS__ . '.LINKMETHODMISSING',
@@ -612,7 +629,7 @@ class Link extends DataObject
     {
         if ($this->SelectedStyle) {
             $this->setClass($this->SelectedStyle);
-        } else if ($this->template_style) {
+        } elseif ($this->template_style) {
             $this->setClass($this->template_style);
         }
 
@@ -826,7 +843,9 @@ class Link extends DataObject
     {
         $ClassName = $this->ClassName;
 
-        if (is_object($ClassName)) $ClassName = get_class($ClassName);
+        if (is_object($ClassName)) {
+            $ClassName = get_class($ClassName);
+        }
 
         if (!is_subclass_of($ClassName, DataObject::class)) {
             throw new InvalidArgumentException($ClassName . ' is not a subclass of DataObject');
