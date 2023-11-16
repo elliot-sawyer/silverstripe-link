@@ -12,7 +12,7 @@ composer require gorriecoe/silverstripe-link
 
 ## Documentation
 
-Check out [documentation](https://gorriecoe.github.io/silverstripe-link/en)
+Check out [documentation](https://firesphere.github.io/link-docs/en) and [API documentation](https://firesphere.github.io/link-api)
 
 ## Maintainers
 
