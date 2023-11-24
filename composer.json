@@ -17,9 +17,16 @@
   "require": {
     "silverstripe/framework": "^4 || ^5",
     "unclecheese/display-logic": "^2 || ^3",
-    "giggsey/libphonenumber-for-php": "^8.0"
+    "giggsey/libphonenumber-for-php": "^8.0",
+    "sheadawson/silverstripe-dependentdropdownfield": "dev-master"
   },
   "extra": {
     "installer-name": "link"
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/anhld/silverstripe-dependentdropdownfield"
+    }
+  ]
 }

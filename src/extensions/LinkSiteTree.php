@@ -3,6 +3,8 @@
 namespace gorriecoe\Link\Extensions;
 
 use gorriecoe\Link\Models\Link;
+use Page;
+use Sheadawson\DependentDropdown\Forms\DependentDropdownField;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
@@ -26,6 +28,7 @@ class LinkSiteTree extends DataExtension
      * @var array
      */
     private static $db = [
+        'QueryString' => 'Varchar(255)',
         'Anchor' => 'Varchar(255)',
     ];
 
@@ -34,7 +37,7 @@ class LinkSiteTree extends DataExtension
      * @var array
      */
     private static $has_one = [
-        'SiteTree' => SiteTree::class,
+        'SiteTree' => SiteTree::class
     ];
 
     /**
@@ -49,7 +52,7 @@ class LinkSiteTree extends DataExtension
 
     /**
      * Defines the label used in the sitetree dropdown.
-     * @param String $sitetree_field_label
+     * @param string $sitetree_field_label
      */
     private static $sitetree_field_label = 'MenuTitle';
 
@@ -61,7 +64,33 @@ class LinkSiteTree extends DataExtension
     {
         $owner = $this->owner;
         $config = $owner->config();
-        $sitetree_field_label = $config->get('sitetree_field_label') ? : 'MenuTitle';
+        $sitetree_field_label = $config->get('sitetree_field_label') ?: 'MenuTitle';
+
+        // Get source data for the ElementID field
+        $anchorOptions = function ($pageID) {
+            $anchorOptions = [];
+            $page = Page::get_by_id($pageID);
+            if($page) {
+                $list = $page->getAnchorsOnPage();
+                $anchorOptions = array_combine($list, $list);
+            }
+
+            if (!empty($anchorOptions)) {
+                $results = array_merge(
+                    ['' => _t(__CLASS__ . '.SELECTANCHOR', '(Select an anchor)')],
+                    $anchorOptions
+                );
+            } else {
+                $results = [
+                    '' => _t(__CLASS__ . '.ANCHORSNOTAVAILABLE', '(Anchors are not available for the selected page)')
+                ];
+            }
+
+            return $results;
+        };
+
+        // Get field label for the ElementID field
+        $anchorLabel = _t(__CLASS__  . '.AnchorLabel', 'Anchor on page');
 
         // Insert site tree field after the file selection field
         $fields->insertAfter(
@@ -72,12 +101,18 @@ class LinkSiteTree extends DataExtension
                     _t(__CLASS__ . '.PAGE', 'Page'),
                     SiteTree::class
                 )
-                ->setTitleField($sitetree_field_label),
+                    ->setTitleField($sitetree_field_label)
+                    ->setHasEmptyDefault(true),
                 TextField::create(
+                    'Querystring',
+                    _t(__CLASS__ . '.QUERYSTRING', 'Querystring')
+                ),
+                DependentDropdownField::create(
                     'Anchor',
-                    _t(__CLASS__ . '.ANCHOR', 'Anchor/Querystring')
+                    $anchorLabel,
+                    $anchorOptions
                 )
-                ->setDescription(_t(__CLASS__ . '.ANCHORINFO', 'Include # at the start of your anchor name or, ? at the start of your querystring'))
+                    ->setDepends($sitetreeField),
             )
             ->displayIf('Type')->isEqualTo('SiteTree')->end()
         );
@@ -88,9 +123,6 @@ class LinkSiteTree extends DataExtension
         }
     }
 
-    /**
-     * @return bool
-     */
     public function updateIsCurrent(&$status)
     {
         $owner = $this->owner;
@@ -99,14 +131,11 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             $status = $currentPage === $owner->SiteTree() || $currentPage->ID === $owner->SiteTreeID;
         }
     }
 
-    /**
-     * @return bool
-     */
     public function updateIsSection(&$status)
     {
         $owner = $this->owner;
@@ -115,14 +144,11 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             $status = $owner->isCurrent() || in_array($owner->SiteTreeID, $currentPage->getAncestors()->column());
         }
     }
 
-    /**
-     * @return bool
-     */
     public function updateIsOrphaned(&$status)
     {
         $owner = $this->owner;
@@ -131,7 +157,7 @@ class LinkSiteTree extends DataExtension
             isset($owner->SiteTreeID) &&
             $owner->CurrentPage instanceof SiteTree &&
             $currentPage = $owner->CurrentPage
-        ){
+        ) {
             // Always false for root pages
             if (empty($owner->SiteTree()->ParentID)) {
                 $status = false;
@@ -139,8 +165,25 @@ class LinkSiteTree extends DataExtension
             }
 
             // Parent must exist and not be an orphan itself
-            $parent = $this->Parent();
+            $parent = $owner->Parent();
             $status = !$parent || !$parent->exists() || $parent->isOrphaned();
         }
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+
+        $owner = $this->getOwner();
+
+        if (empty($owner->Title) && $owner->Type === "SiteTree" && $owner->SiteTreeID && $owner->ElementID && $element = $owner->Element()) {
+            $owner->Title = $element->Title;
+        }
+        $owner->Querystring = $owner->Querystring ? str_replace('?', '', (string) $owner->QueryString) : $owner->Querystring;
+        $owner->Anchor = $owner->Anchor ? str_replace('#', '', (string) $owner->Anchor) : $owner->Anchor;
     }
 }
