@@ -8,7 +8,7 @@ use SilverStripe\ORM\DataExtension;
 /**
  * Fixes duplicate link in SiteTree
  *
- * @package silverstripe-link
+ * @property \SilverStripe\CMS\Model\SiteTree&\gorriecoe\Link\Extensions\SiteTreeLink $owner
  */
 class SiteTreeLink extends DataExtension
 {

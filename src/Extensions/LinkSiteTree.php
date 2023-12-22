@@ -13,11 +13,10 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
 /**
  * Add sitetree type to link object
  *
- * @package silverstripe-link
- *
- * @property Link|$this owner
- * @property int SiteTreeID
- * @method SiteTree SiteTree()
+ * @property \gorriecoe\Link\Models\Link&\gorriecoe\Link\Extensions\LinkSiteTree $owner
+ * @property string $Anchor
+ * @property int $SiteTreeID
+ * @method \SilverStripe\CMS\Model\SiteTree SiteTree()
  */
 class LinkSiteTree extends DataExtension
 {
