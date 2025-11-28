@@ -4,7 +4,7 @@ namespace gorriecoe\Link\Extensions;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;;
 use SilverStripe\Core\Convert;
 
 /**
@@ -12,7 +12,7 @@ use SilverStripe\Core\Convert;
  *
  * @package silverstripe-link
  */
-class DefineableMarkupID extends DataExtension
+class DefineableMarkupID extends Extension
 {
     /**
      * Database fields

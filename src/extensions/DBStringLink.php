@@ -3,7 +3,7 @@
 namespace gorriecoe\Link\Extensions;
 
 use SilverStripe\Core\Convert;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;;
 use gorriecoe\Link\View\Phone;
 
 /**
@@ -11,7 +11,7 @@ use gorriecoe\Link\View\Phone;
  *
  * @package silverstripe-link
  */
-class DBStringLink extends DataExtension
+class DBStringLink extends Extension
 {
     /**
      * Provides string replace to allow link friendly urls

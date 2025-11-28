@@ -3,14 +3,14 @@
 namespace gorriecoe\Link\Extensions;
 
 use gorriecoe\Link\Models\Link;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;;
 
 /**
  * Fixes duplicate link in SiteTree
  *
  * @package silverstripe-link
  */
-class SiteTreeLink extends DataExtension
+class SiteTreeLink extends Extension
 {
     /**
      * Event handler called before duplicating a sitetree object.

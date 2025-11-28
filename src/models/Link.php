@@ -3,7 +3,6 @@
 namespace gorriecoe\Link\Models;
 
 use gorriecoe\Link\Extensions\LinkSiteTree;
-use gorriecoe\Link\Extensions\SiteTreeLink;
 use InvalidArgumentException;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\CheckboxField;
@@ -15,11 +14,12 @@ use SilverStripe\Forms\TabSet;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Control\Director;
 use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\Assets\Folder;
+use SilverStripe\Core\Validation\ValidationResult;
+
 
 /**
  * Link
@@ -67,9 +67,9 @@ class Link extends DataObject
     private static $has_one = [
         'File' => File::class
     ];
-    
+
     private static $owns = [
-       'File',   
+        'File',
     ];
 
     /**
@@ -192,12 +192,12 @@ class Link extends DataObject
                 'Root',
                 Tab::create('Main')
             )
-            ->setTitle(_t('SiteTree.TABMAIN', 'Main')),
+                ->setTitle(_t('SiteTree.TABMAIN', 'Main')),
             TabSet::create(
                 'Root',
                 Tab::create('Settings')
             )
-            ->setTitle(_t('SiteTree.TABSETTINGS', 'Settings'))
+                ->setTitle(_t('SiteTree.TABSETTINGS', 'Settings'))
         );
 
         if ($styles = $this->i18nStyles) {
@@ -208,7 +208,7 @@ class Link extends DataObject
                     _t(__CLASS__ . '.STYLE', 'Style'),
                     $styles
                 )
-                ->setEmptyString(_t(__CLASS__ . '.DEFAULT', 'Default')),
+                    ->setEmptyString(_t(__CLASS__ . '.DEFAULT', 'Default')),
                 'Type'
             );
         }
@@ -236,13 +236,13 @@ class Link extends DataObject
                 'Title',
                 _t(__CLASS__ . '.TITLE', 'Title')
             )
-            ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
+                ->setDescription(_t(__CLASS__ . '.OPTIONALTITLE', 'Optional. Will be auto-generated from link if left blank.')),
             OptionsetField::create(
                 'Type',
                 _t(__CLASS__ . '.LINKTYPE', 'Type'),
                 $this->i18nTypes
             )
-            ->setValue('URL'),
+                ->setValue('URL'),
             Wrapper::create(
                 $fileDropdown = TreeDropdownField::create(
                     'FileID',
@@ -252,35 +252,35 @@ class Link extends DataObject
                     'Title'
                 )
             )
-            ->displayIf('Type')->isEqualTo('File')->end(),
+                ->displayIf('Type')->isEqualTo('File')->end(),
             Wrapper::create(
                 TextField::create(
                     'URL',
                     _t(__CLASS__ . '.URL', 'URL')
                 )
             )
-            ->displayIf('Type')->isEqualTo('URL')->end(),
+                ->displayIf('Type')->isEqualTo('URL')->end(),
             Wrapper::create(
                 TextField::create(
                     'Email',
                     _t(__CLASS__ . '.EMAILADDRESS', 'Email Address')
                 )
             )
-            ->displayIf('Type')->isEqualTo('Email')->end(),
+                ->displayIf('Type')->isEqualTo('Email')->end(),
             Wrapper::create(
                 TextField::create(
                     'Phone',
                     _t(__CLASS__ . '.PHONENUMBER', 'Phone Number')
                 )
             )
-            ->displayIf('Type')->isEqualTo('Phone')->end(),
+                ->displayIf('Type')->isEqualTo('Phone')->end(),
             CheckboxField::create(
                 'OpenInNewWindow',
-                _t(__CLASS__ . '.OPENINNEWWINDOW','Open link in a new window')
+                _t(__CLASS__ . '.OPENINNEWWINDOW', 'Open link in a new window')
             )
-            ->displayIf('Type')->isEqualTo('URL')
-            ->orIf()->isEqualTo('File')
-            ->orIf()->isEqualTo('SiteTree')->end()
+                ->displayIf('Type')->isEqualTo('URL')
+                ->orIf()->isEqualTo('File')
+                ->orIf()->isEqualTo('SiteTree')->end()
         ];
 
         // Disable folders in dropdown if linking to folders is not allowed.
@@ -295,11 +295,7 @@ class Link extends DataObject
         return $fields;
     }
 
-    /**
-     * Validate
-     * @return ValidationResult
-     */
-    public function validate()
+    public function validate(): ValidationResult
     {
         $valid = true;
         $message = null;
@@ -313,7 +309,7 @@ class Link extends DataObject
                 if ($this->{$type} == '') {
                     $valid = false;
                     $message = _t(
-                        __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
+                        __CLASS__ . '.VALIDATIONERROR_EMPTY' . strtoupper($type),
                         'You must enter a {TypeLabel}',
                         [
                             'TypeLabel' => $this->TypeLabel
@@ -323,7 +319,7 @@ class Link extends DataObject
                 break;
             case 'File':
             case 'SiteTree':
-                if ($type && empty($this->{$type.'ID'})) {
+                if ($type && empty($this->{$type . 'ID'})) {
                     $valid = false;
                     $message = _t(
                         __CLASS__ . '.VALIDATIONERROR_OBJECT',
@@ -369,7 +365,7 @@ class Link extends DataObject
             }
         }
 
-        $result = ValidationResult::create();
+        $result = parent::validate();
         if (!$valid) {
             $result->addError($message);
         }
@@ -502,7 +498,7 @@ class Link extends DataObject
             $allowed_types = $this->allowed_types;
         }
         if ($allowed_types) {
-           foreach ($allowed_types as $type) {
+            foreach ($allowed_types as $type) {
                 if (!array_key_exists($type, $types)) {
                     user_error("{$type} is not a valid link type");
                 }
@@ -525,7 +521,7 @@ class Link extends DataObject
         $i18nTypes = [];
         // Get translatable labels
         foreach ($this->Types as $key => $label) {
-            $i18nTypes[$key] = _t(__CLASS__ . '.TYPE'.strtoupper($key), $label);
+            $i18nTypes[$key] = _t(__CLASS__ . '.TYPE' . strtoupper($key), $label);
         }
         $this->extend('updatei18nTypes', $i18nTypes);
         return $i18nTypes;
@@ -797,7 +793,7 @@ class Link extends DataObject
      * Renders an HTML anchor attribute for this link
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
-    public function forTemplate()
+    public function forTemplate(): string
     {
         $link = '';
         if ($this->LinkURL) {

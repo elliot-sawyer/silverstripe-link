@@ -7,7 +7,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**
@@ -19,7 +19,7 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
  * @property int SiteTreeID
  * @method SiteTree SiteTree()
  */
-class LinkSiteTree extends DataExtension
+class LinkSiteTree extends Extension
 {
     /**
      * Database fields
