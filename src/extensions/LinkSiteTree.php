@@ -7,7 +7,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\Core\Extension;;
+use SilverStripe\Core\Extension;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**

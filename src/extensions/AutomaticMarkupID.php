@@ -3,7 +3,7 @@
 namespace gorriecoe\Link\Extensions;
 
 use SilverStripe\Core\Convert;
-use SilverStripe\Core\Extension;;
+use SilverStripe\Core\Extension;
 
 /**
  * Add sitetree type to link field

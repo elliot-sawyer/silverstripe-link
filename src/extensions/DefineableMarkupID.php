@@ -4,7 +4,7 @@ namespace gorriecoe\Link\Extensions;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\Core\Extension;;
+use SilverStripe\Core\Extension;
 use SilverStripe\Core\Convert;
 
 /**
